@@ -1,6 +1,6 @@
 <h1>Template #<%= @this_template.id %></h1>
 
-<% @this_template.template_sets.each do |template_set| %>
+<% @this_template.component_sets.each do |template_set| %>
 
   <%= template_set.workout_component.name %>
   <% unless template_set.grams.nil? %>
@@ -10,7 +10,7 @@
 
 <% end %>
 
-<% @this_template.template_times.each do |template_time| %>
+<% @this_template.component_times.each do |template_time| %>
 
   <%= template_time.workout_component.name %>
   <% unless template_time.meters.nil? %>

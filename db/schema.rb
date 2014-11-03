@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141103023810) do
+ActiveRecord::Schema.define(version: 20141103100534) do
 
   create_table "component_sets", force: true do |t|
     t.integer  "recorded_workout_id"
@@ -23,6 +23,8 @@ ActiveRecord::Schema.define(version: 20141103023810) do
     t.integer  "num_of_sets"
     t.integer  "rest"
     t.string   "stage"
+    t.integer  "scheduled_workout_id"
+    t.integer  "template_id"
   end
 
   create_table "component_times", force: true do |t|
@@ -34,34 +36,13 @@ ActiveRecord::Schema.define(version: 20141103023810) do
     t.integer  "workout_component_id"
     t.integer  "rest"
     t.string   "stage"
+    t.integer  "scheduled_workout_id"
+    t.integer  "template_id"
   end
 
   create_table "recorded_workouts", force: true do |t|
     t.datetime "workout_time"
     t.text     "notes"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "scheduled_sets", force: true do |t|
-    t.integer  "scheduled_workout_id"
-    t.integer  "grams"
-    t.integer  "reps"
-    t.integer  "num_of_sets"
-    t.integer  "rest"
-    t.string   "stage"
-    t.integer  "workout_component_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "scheduled_times", force: true do |t|
-    t.integer  "scheduled_workout_id"
-    t.integer  "meters"
-    t.integer  "seconds"
-    t.integer  "rest"
-    t.string   "stage"
-    t.integer  "workout_component_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -72,29 +53,6 @@ ActiveRecord::Schema.define(version: 20141103023810) do
     t.integer  "template_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "template_sets", force: true do |t|
-    t.integer  "template_id"
-    t.integer  "grams"
-    t.integer  "reps"
-    t.integer  "num_of_sets"
-    t.integer  "rest"
-    t.string   "stage"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "workout_component_id"
-  end
-
-  create_table "template_times", force: true do |t|
-    t.integer  "template_id"
-    t.integer  "meters"
-    t.integer  "seconds"
-    t.integer  "rest"
-    t.string   "stage"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "workout_component_id"
   end
 
   create_table "templates", force: true do |t|

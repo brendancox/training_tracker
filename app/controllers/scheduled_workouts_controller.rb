@@ -32,8 +32,8 @@ class ScheduledWorkoutsController < ApplicationController
       end
     else
       template = Template.find(params[:template])
-      template_time_group = template.template_times.all
-      template_set_group = template.template_sets.all
+      template_time_group = template.component_times.all
+      template_set_group = template.component_sets.all
       num_of_time_components = template_time_group.count
       num_of_set_components = template_set_group.count
       template_time_group.each do |exercise|
@@ -55,17 +55,18 @@ class ScheduledWorkoutsController < ApplicationController
       end
     end
     params.permit(:workout, times: [], sets: [])
-    @component_times = Array.new(num_of_time_components) {@workout.scheduled_times.new(params[:times])}
-    @component_sets = Array.new(num_of_set_components) {@workout.scheduled_sets.new(params[:sets])}
+    @component_times = Array.new(num_of_time_components) {@workout.component_times.new(params[:times])}
+    @component_sets = Array.new(num_of_set_components) {@workout.component_sets.new(params[:sets])}
 
   end
 
   def create
-    this_workout = ScheduledWorkout.create(workout_time: params[:scheduled_workout][:workout_time])
+    workout_time = flatten_date(params[:scheduled_workout])
+    this_workout = ScheduledWorkout.create(workout_time: workout_time)
     time_params = params[:scheduled_workout][:times]
     time_params.each do |time_param|
       unless time_param[:meters].empty? && time_param[:seconds].empty?
-        this_workout.scheduled_times.create(
+        this_workout.component_times.create(
                               meters: time_param[:meters],
                               seconds: time_param[:seconds],
                               workout_component_id: time_param[:workout_component_id],
@@ -76,7 +77,7 @@ class ScheduledWorkoutsController < ApplicationController
     set_params.each do |set_param|
       unless set_param[:reps].empty?
         grams = set_param[:grams].to_i * 1000 unless set_param[:grams].empty?
-        this_workout.scheduled_sets.create(
+        this_workout.component_sets.create(
                               grams: grams,
                               reps: set_param[:reps],
                               workout_component_id: set_param[:workout_component_id],
@@ -98,7 +99,21 @@ class ScheduledWorkoutsController < ApplicationController
 
     respond_to do |format|
       format.js { render :layout => false }
-      format.html {redirect_to workouts_url}
+      format.html {redirect_to scheduled_workouts_url}
     end
   end
+
+  private
+
+  def flatten_date(parent_param)
+
+    Time.new(parent_param["workout_time(1i)"],
+             parent_param["workout_time(2i)"],
+             parent_param["workout_time(3i)"],
+             parent_param["workout_time(4i)"],
+             parent_param["workout_time(5i)"],
+             parent_param["workout_time(6i)"],
+             parent_param["workout_time(7i)"])
+  end
+
 end

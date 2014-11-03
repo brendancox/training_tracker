@@ -1,6 +1,6 @@
 class ScheduledWorkout < ActiveRecord::Base
-  has_many :scheduled_sets, :dependent => :destroy
-  has_many :scheduled_times, :dependent => :destroy
-  accepts_nested_attributes_for :scheduled_sets
-  accepts_nested_attributes_for :scheduled_times
+  has_many :component_sets, :dependent => :destroy
+  has_many :component_times, :dependent => :destroy
+  accepts_nested_attributes_for :component_sets
+  accepts_nested_attributes_for :component_times
 end

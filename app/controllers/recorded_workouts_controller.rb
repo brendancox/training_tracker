@@ -33,8 +33,8 @@ class RecordedWorkoutsController < ApplicationController
       end
     else
       template = Template.find(params[:template])
-      template_time_group = template.template_times.all
-      template_set_group = template.template_sets.all
+      template_time_group = template.component_times.all
+      template_set_group = template.component_sets.all
       num_of_time_components = template_time_group.count
       num_of_set_components = template_set_group.count
       template_time_group.each do |exercise|
@@ -63,8 +63,6 @@ class RecordedWorkoutsController < ApplicationController
 
   def create
     workout_time = flatten_date(params[:recorded_workout])
-    puts "DEBUG OUTPUT BELOW"
-    puts workout_time
     this_workout = RecordedWorkout.create(workout_time: workout_time)
 
     time_params = params[:recorded_workout][:times]

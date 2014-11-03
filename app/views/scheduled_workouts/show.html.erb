@@ -1,6 +1,6 @@
 <h1>Scheduled Workout #<%= @this_workout.id %></h1>
 
-<% @this_workout.scheduled_sets.each do |component_set| %>
+<% @this_workout.component_sets.each do |component_set| %>
 
   <%= component_set.workout_component.name %>
   <% unless component_set.grams.nil? %>
@@ -10,7 +10,7 @@
 
 <% end %>
 
-<% @this_workout.scheduled_times.each do |component_time| %>
+<% @this_workout.component_times.each do |component_time| %>
 
   <%= component_time.workout_component.name %>
   <% unless component_time.meters.nil? %>
@@ -23,4 +23,4 @@
 
 <% end %>
 
-<%= link_to "delete", workout_path, method: :delete %><br>
+<%= link_to "delete", scheduled_workout_path, method: :delete %><br>

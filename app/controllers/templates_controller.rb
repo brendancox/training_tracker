@@ -23,8 +23,8 @@ class TemplatesController < ApplicationController
     end
 
     params.permit(:workout, times: [], sets: [])
-    @template_times = Array.new(num_of_time_components) {@template.template_times.new(params[:times])}
-    @template_sets = Array.new(num_of_set_components) {@template.template_sets.new(params[:sets])}
+    @template_times = Array.new(num_of_time_components) {@template.component_times.new(params[:times])}
+    @template_sets = Array.new(num_of_set_components) {@template.component_sets.new(params[:sets])}
 
   end
 
@@ -33,7 +33,7 @@ class TemplatesController < ApplicationController
     time_params = params[:template][:times]
     time_params.each do |time_param|
       unless time_param[:meters].empty? && time_param[:seconds].empty?
-        this_template.template_times.create(
+        this_template.component_times.create(
                               meters: time_param[:meters],
                               seconds: time_param[:seconds],
                               workout_component_id: time_param[:workout_component_id],
@@ -44,7 +44,7 @@ class TemplatesController < ApplicationController
     set_params.each do |set_param|
       unless set_param[:reps].empty?
         grams = set_param[:grams].to_i * 1000 unless set_param[:grams].empty?
-        this_template.template_sets.create(
+        this_template.component_sets.create(
                               grams: grams,
                               reps: set_param[:reps],
                               workout_component_id: set_param[:workout_component_id],
