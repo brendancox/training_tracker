@@ -25,11 +25,6 @@ class TemplatesController < WorkoutsController
 
   def destroy
     @workout = Template.find(params[:id])
-    @workout.destroy
-
-    respond_to do |format|
-      format.js { render :layout => false }
-      format.html {redirect_to templates_url}
-    end
+    super
   end
 end

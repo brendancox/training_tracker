@@ -25,12 +25,7 @@ class RecordedWorkoutsController < WorkoutsController
 
   def destroy
     @workout = RecordedWorkout.find(params[:id])
-    @workout.destroy
-
-    respond_to do |format|
-      format.js { render :layout => false }
-      format.html {redirect_to recorded_workouts_url}
-    end
+    super
   end
 
 end

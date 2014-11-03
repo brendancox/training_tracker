@@ -14,6 +14,15 @@ class WorkoutsController < ApplicationController
     load_arrays_for_new_workout_form
   end
 
+  def destroy
+  	@workout.destroy
+
+    respond_to do |format|
+      format.js { render :layout => false }
+      format.html {redirect_to root_path}
+    end
+  end
+
   private
 
   def flatten_date(parent_param)

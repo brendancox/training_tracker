@@ -25,12 +25,7 @@ class ScheduledWorkoutsController < WorkoutsController
 
   def destroy
     @workout = ScheduledWorkout.find(params[:id])
-    @workout.destroy
-
-    respond_to do |format|
-      format.js { render :layout => false }
-      format.html {redirect_to scheduled_workouts_url}
-    end
+    super
   end
 
 end
