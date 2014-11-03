@@ -1,0 +1,11 @@
+.inline-links {
+  display: inline;
+}
+
+.number-entry-time {
+  width: 3em;
+}
+
+#calendar {
+	width: 760px;
+}

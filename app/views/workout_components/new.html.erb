@@ -1,0 +1,20 @@
+<h1>Add Workout Component </h1>
+
+<%= form_for(@workout_component) do |f| %>
+
+<table>
+  <tr>
+    <td><%= f.label "Name of activity" %></td>
+    <td><%= f.text_field :name %></td>
+  </tr>
+  <tr>
+    <td><%= f.label "What is measured?" %></td>
+    <td><%= f.select :component_type, ["Reps", "Time"] %></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><%= f.submit %></td>
+  </tr>
+</table>
+
+<% end %>

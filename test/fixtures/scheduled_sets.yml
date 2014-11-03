@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  scheduled_workout_id: 1
+  grams: 1
+  reps: 1
+  num_of_sets: 1
+  rest: 1
+  stage: MyString
+  workout_component_id: 1
+
+two:
+  scheduled_workout_id: 1
+  grams: 1
+  reps: 1
+  num_of_sets: 1
+  rest: 1
+  stage: MyString
+  workout_component_id: 1

@@ -1,0 +1,27 @@
+
+<div id='calendar'></div>
+
+
+<script type='text/javascript'>
+	var newWorkoutUrl = '<%= url_for new_recorded_workout_url %>';
+	var eventsArray =
+	    [
+			<% @recorded_workouts.each do |workout| %>
+		        {
+		            title: 'Workout <%= workout.id %>',
+		            start: '<%= Time.at(workout.workout_time) %>',
+		            url: '<%= url_for workout %>',
+		            color: 'blue'
+		        },
+	        <% end %>
+	        <% @scheduled_workouts.each do |workout| %>
+		        {
+		            title: 'Scheduled Workout <%= workout.id %>',
+		            start: '<%= Time.at(workout.workout_time) %>',
+		            url: '<%= url_for workout %>',
+		            color: 'yellow',
+		            textColor: 'black'
+		        },
+	        <% end %>
+    	];
+</script>

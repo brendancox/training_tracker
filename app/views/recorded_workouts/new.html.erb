@@ -1,0 +1,60 @@
+<h1>Add Workout</h1>
+
+<%= form_for(@workout) do |f| %>
+
+
+
+<%= f.label "Date and Time" %>
+<%= f.datetime_select :workout_time, default: Time.now %>
+
+
+<table>
+    <tr>
+      <th>Activity</th>
+      <th>Distance (m)</th>
+      <th>Time</th>
+      <th>Rest</th>
+    </tr>
+
+    <% @component_times.each_with_index do |component_time, index| %>
+
+        <%= render 'new_time', index: index, f: f, exercise: index, component_time: component_time %>
+
+    <% end %>
+
+    <tbody id="addCardioLink">
+    <tr>
+      <td></td>
+      <td><%= link_to "Add Cardio Exercise", "#", class: "addExercise" %></td>
+    </tr>
+    </tbody>
+
+    <tr>
+      <th>Activity</th>
+      <th>Weight (kg)</th>
+      <th>Reps</th>
+      <th>Sets</th>
+      <th>Rest (after each set)</th>
+    </tr>
+
+  <% @component_sets.each_with_index do |component_set, index| %>
+
+
+      <%= render 'new_set', index: index, f: f, exercise: index, component_set: component_set %>
+
+
+  <% end %>
+
+  <tbody id="addSetLink">
+  <tr>
+    <td></td>
+    <td><%= link_to "Add Strength/Toning Exercise", "#", class: "addExercise" %></td>
+  </tr>
+  </tbody>
+    <tr>
+      <td></td>
+      <td><%= f.submit "Record Workout"%></td>
+    </tr>
+  </table>
+
+<% end %>

@@ -1,0 +1,54 @@
+<h1>Add Workout Template</h1>
+
+<%= form_for(@template) do |f| %>
+
+<table>
+    <tr>
+      <th>Activity</th>
+      <th>Distance (m)</th>
+      <th>Time (s)</th>
+      <th>Rest</th>
+    </tr>
+
+    <% @template_times.each_with_index do |template_time, index| %>
+
+        <%= render 'new_time', index: index, f: f, exercise: index, component_time: template_time %>
+
+    <% end %>
+
+    <tbody id="addCardioLink">
+    <tr>
+      <td></td>
+      <td><%= link_to "Add Cardio Exercise", "#", class: "addExercise" %></td>
+    </tr>
+    </tbody>
+
+    <tr>
+      <th>Activity</th>
+      <th>Weight (kg)</th>
+      <th>Reps</th>
+      <th>Sets</th>
+      <th>Rest (after each set)</th>
+    </tr>
+
+  <% @template_sets.each_with_index do |template_set, index| %>
+
+
+      <%= render 'new_set', index: index, f: f, exercise: index, component_set: template_set %>
+
+
+  <% end %>
+
+  <tbody id="addSetLink">
+  <tr>
+    <td></td>
+    <td><%= link_to "Add Strength/Toning Exercise", "#", class: "addExercise" %></td>
+  </tr>
+  </tbody>
+    <tr>
+      <td></td>
+      <td><%= f.submit "Save Template"%></td>
+    </tr>
+  </table>
+
+<% end %>
