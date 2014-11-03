@@ -1,6 +1,6 @@
 <h1>Add Workout Template</h1>
 
-<%= form_for(@template) do |f| %>
+<%= form_for(@workout) do |f| %>
 
 <table>
     <tr>
@@ -10,9 +10,9 @@
       <th>Rest</th>
     </tr>
 
-    <% @template_times.each_with_index do |template_time, index| %>
+    <% @component_times.each_with_index do |component_time, index| %>
 
-        <%= render 'new_time', index: index, f: f, exercise: index, component_time: template_time %>
+        <%= render 'new_time', index: index, f: f, exercise: index, component_time: component_time %>
 
     <% end %>
 
@@ -31,10 +31,10 @@
       <th>Rest (after each set)</th>
     </tr>
 
-  <% @template_sets.each_with_index do |template_set, index| %>
+  <% @component_sets.each_with_index do |component_set, index| %>
 
 
-      <%= render 'new_set', index: index, f: f, exercise: index, component_set: template_set %>
+      <%= render 'new_set', index: index, f: f, exercise: index, component_set: component_set %>
 
 
   <% end %>

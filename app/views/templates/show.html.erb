@@ -1,27 +1,27 @@
-<h1>Template #<%= @this_template.id %></h1>
+<h1>Template #<%= @this_workout.id %></h1>
 
-<% @this_template.component_sets.each do |template_set| %>
+<% @this_workout.component_sets.each do |component_set| %>
 
-  <%= template_set.workout_component.name %>
-  <% unless template_set.grams.nil? %>
-    <%= template_set.grams %> grams,
+  <%= component_set.workout_component.name %>
+  <% unless component_set.grams.nil? %>
+    <%= component_set.grams %> grams,
   <% end %>
-  <%= template_set.reps %> reps <br>
+  <%= component_set.reps %> reps <br>
 
 <% end %>
 
-<% @this_template.component_times.each do |template_time| %>
+<% @this_workout.component_times.each do |component_time| %>
 
-  <%= template_time.workout_component.name %>
-  <% unless template_time.meters.nil? %>
-    <%= template_time.meters %> meters,
+  <%= component_time.workout_component.name %>
+  <% unless component_time.meters.nil? %>
+    <%= component_time.meters %> meters,
   <% end %>
-  <% unless template_time.seconds.nil? %>
-    <%= template_time.seconds %> seconds
+  <% unless component_time.seconds.nil? %>
+    <%= component_time.seconds %> seconds
   <% end %>
   <br>
 
 <% end %>
 
 <%= link_to "delete", template_path, method: :delete %><br>
-<%= link_to "Add workout with this template", new_workout_url(template: @this_template.id) %><br>
+<%= link_to "Add workout with this template", new_recorded_workout_url(template: @this_workout.id) %><br>
