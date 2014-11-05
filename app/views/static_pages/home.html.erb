@@ -1,5 +1,9 @@
 
-<div id='calendar'></div>
+<div class="row">
+	<div class="col-md-8">
+		<div id='calendar'></div>
+	</div>
+</div>
 
 
 <script type='text/javascript'>
@@ -8,16 +12,38 @@
 	    [
 			<% @recorded_workouts.each do |workout| %>
 		        {
-		            title: 'Workout <%= workout.id %>',
-		            start: '<%= Time.at(workout.workout_time) %>',
+		        	<% if workout.name.empty? %>
+		            	title: 'Workout <%= workout.id %>',
+		            <% else %>
+		            	title: '<%= workout.name %>',
+		            <% end %>
+		            
 		            url: '<%= url_for workout %>',
-		            color: 'blue'
+		            	//Adding colors for different time periods along with generic times so 
+		            	//that they are ordered within each calendar day
+		            <% if workout.workout_time == 'morning' %>
+		            	start: '<%= workout.workout_date.to_s %>T05:00:00',
+		            	color: '#00CCFF'
+		            <% elsif workout.workout_time == 'evening' %>
+		            	start: '<%= workout.workout_date.to_s %>T17:00:00',
+		            	color: '#000099'
+		            <% elsif workout.workout_time == 'night' %>
+		            	start: '<%= workout.workout_date.to_s %>T22:00:00',
+		            	color: '#000066'
+		            <% else %>
+		            	start: '<%= workout.workout_date.to_s %>T13:00:00',
+		            	color: '#0000FF'
+		            <% end %>
 		        },
 	        <% end %>
 	        <% @scheduled_workouts.each do |workout| %>
 		        {
-		            title: 'Scheduled Workout <%= workout.id %>',
-		            start: '<%= Time.at(workout.workout_time) %>',
+		            <% if workout.name.empty? %>
+		            	title: 'Scheduled Workout <%= workout.id %>',
+		            <% else %>
+		            	title: '<%= workout.name %>',
+		            <% end %>
+		            start: '<%= workout.workout_date.to_s %>',
 		            url: '<%= url_for workout %>',
 		            color: 'yellow',
 		            textColor: 'black'

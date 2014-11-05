@@ -1,6 +1,6 @@
-<% @templates.each do |template| %>
-  <%= div_for template do %>
-    <%= link_to "Template ##{template.id}", template_url(template.id) %>
-    <%= link_to "delete", template, method: :delete, remote: true %><br>
+<% @workouts.each do |workout| %>
+  <%= div_for workout do %>
+    <%= link_to "Template ##{workout.id}", template_url(workout.id) %>
+    <%= link_to "delete", workout, method: :delete, remote: true %><br>
   <% end %>
 <% end %>

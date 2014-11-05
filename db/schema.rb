@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141103100534) do
+ActiveRecord::Schema.define(version: 20141104091018) do
 
   create_table "component_sets", force: true do |t|
     t.integer  "recorded_workout_id"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20141103100534) do
     t.string   "stage"
     t.integer  "scheduled_workout_id"
     t.integer  "template_id"
+    t.string   "intensity_plan"
   end
 
   create_table "component_times", force: true do |t|
@@ -38,27 +39,33 @@ ActiveRecord::Schema.define(version: 20141103100534) do
     t.string   "stage"
     t.integer  "scheduled_workout_id"
     t.integer  "template_id"
+    t.string   "intensity_plan"
   end
 
   create_table "recorded_workouts", force: true do |t|
-    t.datetime "workout_time"
     t.text     "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
+    t.date     "workout_date"
+    t.string   "workout_time"
   end
 
   create_table "scheduled_workouts", force: true do |t|
-    t.datetime "workout_time"
     t.text     "notes"
     t.integer  "template_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
+    t.date     "workout_date"
+    t.string   "workout_time"
   end
 
   create_table "templates", force: true do |t|
     t.text     "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
   end
 
   create_table "workout_components", force: true do |t|
@@ -66,6 +73,8 @@ ActiveRecord::Schema.define(version: 20141103100534) do
     t.string   "component_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "reps_equipment"
+    t.string   "times_equipment"
   end
 
 end

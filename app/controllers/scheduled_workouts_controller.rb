@@ -11,7 +11,10 @@ class ScheduledWorkoutsController < WorkoutsController
   end
 
   def create
-    this_workout = ScheduledWorkout.create(workout_time: flatten_date(params[:scheduled_workout]))
+    this_workout = ScheduledWorkout.create(name: params[:scheduled_workout][:name],
+                                           workout_date: flatten_date(params[:scheduled_workout]),
+                                           workout_time: params[:scheduled_workout][:workout_time],
+                                           notes: params[:scheduled_workout][:notes])
     save_component_times(this_workout, params[:scheduled_workout][:times])
     save_component_sets(this_workout, params[:scheduled_workout][:sets])
 

@@ -1,16 +1,17 @@
 <%= f.fields_for "times[]", component_time do |h| %>
   <tbody id="<%= index %>" >
     <tr>
-      <td><%= h.select(:workout_component_id, @time_component_array, selected: @template_workout_times[exercise][:workout_id]) %></td>
-      <td><%= h.number_field :meters, value: @template_workout_times[exercise][:meters],
+      <td><%= h.select(:workout_component_id, @time_component_array, selected: @template_workout[:times][index][:workout_id]) %></td>
+      <td><%= h.number_field :meters, value: @template_workout[:times][index][:meters],
                              class: 'number-entry' %></td>
       <td><input class="hours number-entry-time" type="number", min="0", value="0">hrs,
         <input class="mins number-entry-time" type="number", value="0">min,
         <input class="secs number-entry-time" type="number", value="0">sec
-        <%= h.hidden_field :seconds, value: @template_workout_times[exercise][:seconds], 
+        <%= h.hidden_field :seconds, value: @template_workout[:times][index][:seconds], 
                             class: "actual-seconds" %></td>
-      <td><%= h.number_field :rest, value: @template_workout_times[exercise][:rest],
+      <td><%= h.number_field :rest, value: @template_workout[:times][index][:rest],
                               class: 'number-entry' %>sec</td>
+      <td><%= h.select(:intensity_plan, ["","Increase Intensity Soon", "Decrease Intensity Soon"]) %></td> 
       <td><%= link_to "Remove", '#', class: "removeExercise" %>
       <%= link_to "Duplicate", '#', class: "duplicateExercise" %></td>
     </tr>

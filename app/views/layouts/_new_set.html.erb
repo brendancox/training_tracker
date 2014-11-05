@@ -1,0 +1,17 @@
+<%= f.fields_for "sets[]", component_set do |h| %>
+  <tbody id="<%= index %>" >
+    <tr>
+      <td><%= h.select(:workout_component_id, @set_component_array, selected: @template_workout[:sets][index][:workout_id]) %></td>
+      <% puts @template_workout[:sets][index][:grams] %>
+      <td><%= h.number_field :grams, value: @template_workout[:sets][index][:kg], class: 'number-entry'  %></td>
+      <td><%= h.number_field :reps, value: @template_workout[:sets][index][:reps], class: 'number-entry' %></td>
+      <td><%= h.number_field :num_of_sets, value: @template_workout[:sets][index][:num_of_sets], 
+                              class: 'number-entry' %></td>
+      <td><%= h.number_field :rest, value: @template_workout[:sets][index][:rest],
+                              class: 'number-entry' %></td>
+      <td><%= h.select(:intensity_plan, ["","Increase Intensity Soon", "Decrease Intensity Soon"]) %></td>                       
+      <td><%= link_to "Remove", '#', class: "removeExercise" %>
+      <%= link_to "Duplicate", '#', class: "duplicateExercise" %></td>
+    </tr>
+  </tbody>
+<% end %>

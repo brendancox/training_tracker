@@ -1,54 +1,23 @@
 <h1>Add Workout Template</h1>
 
-<%= form_for(@workout) do |f| %>
+<div class="row">
+  <div class="col-md-8">
 
-<table>
-    <tr>
-      <th>Activity</th>
-      <th>Distance (m)</th>
-      <th>Time (s)</th>
-      <th>Rest</th>
-    </tr>
+    <%= form_for(@workout) do |f| %>
 
-    <% @component_times.each_with_index do |component_time, index| %>
+      <%= f.label "Name" %>
+      <%= f.text_field :name, value: @template_workout[:name] %><br>
 
-        <%= render 'new_time', index: index, f: f, exercise: index, component_time: component_time %>
+      <%= render 'layouts/workout_form', f: f %>
+
+        <tr>
+          <td></td>
+          <td><%= f.submit "Save Template"%></td>
+        </tr>
+
+      </table>
 
     <% end %>
 
-    <tbody id="addCardioLink">
-    <tr>
-      <td></td>
-      <td><%= link_to "Add Cardio Exercise", "#", class: "addExercise" %></td>
-    </tr>
-    </tbody>
-
-    <tr>
-      <th>Activity</th>
-      <th>Weight (kg)</th>
-      <th>Reps</th>
-      <th>Sets</th>
-      <th>Rest (after each set)</th>
-    </tr>
-
-  <% @component_sets.each_with_index do |component_set, index| %>
-
-
-      <%= render 'new_set', index: index, f: f, exercise: index, component_set: component_set %>
-
-
-  <% end %>
-
-  <tbody id="addSetLink">
-  <tr>
-    <td></td>
-    <td><%= link_to "Add Strength/Toning Exercise", "#", class: "addExercise" %></td>
-  </tr>
-  </tbody>
-    <tr>
-      <td></td>
-      <td><%= f.submit "Save Template"%></td>
-    </tr>
-  </table>
-
-<% end %>
+  </div>
+</div>

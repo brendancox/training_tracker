@@ -11,7 +11,10 @@ class RecordedWorkoutsController < WorkoutsController
   end
 
   def create
-    this_workout = RecordedWorkout.create(workout_time: flatten_date(params[:recorded_workout]))
+    this_workout = RecordedWorkout.create(name: params[:recorded_workout][:name],
+                                          workout_date: flatten_date(params[:recorded_workout]),
+                                          workout_time: params[:recorded_workout][:workout_time],
+                                          notes: params[:recorded_workout][:notes])
     save_component_times(this_workout, params[:recorded_workout][:times])
     save_component_sets(this_workout, params[:recorded_workout][:sets])
 

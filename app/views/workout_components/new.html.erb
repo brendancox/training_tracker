@@ -9,7 +9,12 @@
   </tr>
   <tr>
     <td><%= f.label "What is measured?" %></td>
-    <td><%= f.select :component_type, ["Reps", "Time"] %></td>
+    <td><%= f.select :component_type, ["Reps", "Time"], {}, class: 'select-component-type' %></td>
+  </tr>
+  <tr>
+    <td><%= f.label "Equipment" %></td>
+    <td><%= f.select :reps_equipment, ["Machine", "Free Weights", "Body Weight Only", "Body + Free Weights"], {}, class: 'reps-select' %>
+        <%= f.select :times_equipment, ["Machine", "Road/Track"], {}, class: 'times-select' %></td>
   </tr>
   <tr>
     <td></td>

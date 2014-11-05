@@ -7,5 +7,9 @@
 }
 
 #calendar {
-	width: 760px;
+
+}
+
+.times-select {
+	display: none;
 }

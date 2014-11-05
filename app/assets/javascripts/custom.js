@@ -13,9 +13,6 @@ $(document).on('page:change', function(){
   if ($("#calendar").length > 0){
     runFullCalendar();
   }
-
-  var now = moment().format();
-  console.log(now);
 });
 
 $(document).on('click', '.duplicateExercise', function(event){
@@ -121,9 +118,9 @@ function updateTimeInputs(){
 }
 
 function updateDate(clickedDate){
-  $("#recorded_workout_workout_time_1i").val(clickedDate.substring(0,4));
-  $("#recorded_workout_workout_time_2i").val(removePrecedingZero(clickedDate.substring(5,7)));
-  $("#recorded_workout_workout_time_3i").val(removePrecedingZero(clickedDate.substring(8,10)));
+  $("#recorded_workout_workout_date_1i").val(clickedDate.substring(0,4));
+  $("#recorded_workout_workout_date_2i").val(removePrecedingZero(clickedDate.substring(5,7)));
+  $("#recorded_workout_workout_date_3i").val(removePrecedingZero(clickedDate.substring(8,10)));
 }
 
 function getParameterByName(name) {
@@ -139,3 +136,14 @@ function removePrecedingZero(numString){
     return numString;
   }
 }
+
+$(document).on('click', '.select-component-type', function(){
+  if ($(this).val() === 'Reps'){
+    $('.times-select').hide();
+    $('.reps-select').show();
+  }
+  if ($(this).val() === 'Time'){
+    $('.reps-select').hide();
+    $('.times-select').show();
+  }
+});

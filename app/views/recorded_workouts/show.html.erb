@@ -1,6 +1,6 @@
 <h1>Workout #<%= @this_workout.id %></h1>
 
-<%= Time.at(@this_workout.workout_time) %><br>
+<%= @this_workout.workout_date.to_s %><br>
 
 <% @this_workout.component_sets.each do |component_set| %>
 

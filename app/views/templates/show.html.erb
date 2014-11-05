@@ -24,4 +24,5 @@
 <% end %>
 
 <%= link_to "delete", template_path, method: :delete %><br>
-<%= link_to "Add workout with this template", new_recorded_workout_url(template: @this_workout.id) %><br>
+<%= link_to "Record completed workout with this template", new_recorded_workout_url(template: @this_workout.id) %><br>
+<%= link_to "Schedule workout with this template", new_scheduled_workout_url(template: @this_workout.id) %><br>

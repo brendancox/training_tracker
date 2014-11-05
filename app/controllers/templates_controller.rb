@@ -1,7 +1,7 @@
 class TemplatesController < WorkoutsController
 
   def index
-    @templates = Template.all
+    @workouts = Template.all
   end
 
 
@@ -11,7 +11,8 @@ class TemplatesController < WorkoutsController
   end
 
   def create
-    this_workout = Template.create()
+    this_workout = Template.create(name: params[:template][:name], 
+                                   notes: params[:template][:notes])
     save_component_times(this_workout, params[:template][:times])
     save_component_sets(this_workout, params[:template][:sets])
 
