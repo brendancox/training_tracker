@@ -1,48 +1,22 @@
 
-<table>
-    <tr>
-      <th>Activity</th>
-      <th>Distance (m)</th>
-      <th>Time</th>
-      <th>Rest</th>
-    </tr>
-
-    <% @component_times.each_with_index do |component_time, index| %>
-
-        <%= render 'layouts/new_time', index: index, f: f, component_time: component_time %>
-
-    <% end %>
-
-    <tbody id="addCardioLink">
-    <tr>
-      <td></td>
-      <td><%= link_to "Add Cardio Exercise", "#", class: "addExercise" %></td>
-    </tr>
-    </tbody>
-
-    <tr>
-      <th>Activity</th>
-      <th>Weight (kg)</th>
-      <th>Reps</th>
-      <th>Sets</th>
-      <th>Rest (after each set)</th>
-    </tr>
-
-  <% @component_sets.each_with_index do |component_set, index| %>
 
 
-      <%= render 'layouts/new_set', index: index, f: f, component_set: component_set %>
+<% @component_times.each_with_index do |component_time, index| %>
+  <%= render 'layouts/new_time', index: index, f: f, component_time: component_time %>
+<% end %>
 
+<div class="exercise-fields">
+	<%= link_to "Add Cardio Exercise", "#", class: "addExercise" %>
+</div>
 
-  <% end %>
+<% @component_sets.each_with_index do |component_set, index| %>
+  <%= render 'layouts/new_set', index: index, f: f, component_set: component_set %>
+<% end %>
 
-  <tbody id="addSetLink">
-  <tr>
-    <td></td>
-    <td><%= link_to "Add Strength/Toning Exercise", "#", class: "addExercise" %></td>
-  </tr>
-  </tbody>
-    <tr>
-      <td><%= f.label "Notes" %></td>
-      <td><%= f.text_area :notes, value: @template_workout[:notes] %></td>
-    </tr>
+<div class="exercise-fields">
+	<%= link_to "Add Strength/Toning Exercise", "#", class: "addExercise" %>
+</div>
+
+<%= f.label "Notes", class: 'sr-only' %>
+<%= f.text_area :notes, value: @template_workout[:notes], placeholder: 'Notes' %>
+<br>

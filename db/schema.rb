@@ -11,10 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141104091018) do
+ActiveRecord::Schema.define(version: 20141105054300) do
 
   create_table "component_sets", force: true do |t|
-    t.integer  "recorded_workout_id"
+    t.integer  "workout_id"
     t.integer  "grams"
     t.integer  "reps"
     t.datetime "created_at"
@@ -23,13 +23,12 @@ ActiveRecord::Schema.define(version: 20141104091018) do
     t.integer  "num_of_sets"
     t.integer  "rest"
     t.string   "stage"
-    t.integer  "scheduled_workout_id"
     t.integer  "template_id"
     t.string   "intensity_plan"
   end
 
   create_table "component_times", force: true do |t|
-    t.integer  "recorded_workout_id"
+    t.integer  "workout_id"
     t.integer  "meters"
     t.integer  "seconds"
     t.datetime "created_at"
@@ -37,28 +36,8 @@ ActiveRecord::Schema.define(version: 20141104091018) do
     t.integer  "workout_component_id"
     t.integer  "rest"
     t.string   "stage"
-    t.integer  "scheduled_workout_id"
     t.integer  "template_id"
     t.string   "intensity_plan"
-  end
-
-  create_table "recorded_workouts", force: true do |t|
-    t.text     "notes"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "name"
-    t.date     "workout_date"
-    t.string   "workout_time"
-  end
-
-  create_table "scheduled_workouts", force: true do |t|
-    t.text     "notes"
-    t.integer  "template_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "name"
-    t.date     "workout_date"
-    t.string   "workout_time"
   end
 
   create_table "templates", force: true do |t|
@@ -75,6 +54,17 @@ ActiveRecord::Schema.define(version: 20141104091018) do
     t.datetime "updated_at"
     t.string   "reps_equipment"
     t.string   "times_equipment"
+  end
+
+  create_table "workouts", force: true do |t|
+    t.string   "name"
+    t.date     "workout_date"
+    t.string   "workout_time"
+    t.text     "notes"
+    t.integer  "template_id"
+    t.boolean  "completed",    default: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

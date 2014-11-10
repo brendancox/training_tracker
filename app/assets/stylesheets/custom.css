@@ -2,6 +2,10 @@
   display: inline;
 }
 
+.number-entry {
+  width: 4em;
+}
+
 .number-entry-time {
   width: 3em;
 }
@@ -11,5 +15,9 @@
 }
 
 .times-select {
+	display: none;
+}
+
+.days_of_week {
 	display: none;
 }

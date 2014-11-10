@@ -6,8 +6,8 @@ class TemplatesController < WorkoutsController
 
 
   def new
-    @workout = Template.new(params[:template])
     super
+    @workout = Template.new(params[:template])
   end
 
   def create
@@ -26,6 +26,12 @@ class TemplatesController < WorkoutsController
 
   def destroy
     @workout = Template.find(params[:id])
-    super
+    @workout.destroy
+
+    respond_to do |format|
+      format.js { render :layout => false }
+      format.html {redirect_to root_path}
+    end
+    
   end
 end

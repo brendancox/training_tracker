@@ -1,0 +1,35 @@
+<div class="col-md-4">
+	<div id='right-panel'>
+		<% if current_page?('/') %>
+			<h3>How to use this site</h3>
+			<p>Click on a date on the calendar to record or schedule and individual workout.</p>
+			<p>You can also use the links below to create templates of your usual workouts and use this to schedule multiple workouts.</p>
+		<% end %>
+		<h3>Workout Templates</h3>
+		<% @templates.each do |template| %>
+		  <% if template.name.empty? %>
+		    Template Workout
+		  <% else %>
+		    <%= template.name %>
+		  <% end %>
+		   - <%= link_to "View", template_url(template.id) %>
+		   - <%= link_to "Add Workout", new_workout_url(template: template.id, date: params[:date]) %><br>
+		<% end %>
+		<%= link_to "Create New Workout Template", new_template_url %>
+		<h3><%= link_to "Create Full Schedule", schedule_workouts_url %></h3>
+		<p>Schedule multiple workouts at once based on your templates.</p>
+		<% if current_page?('/') %>
+		<h3>Recent Scheduled Workouts</h3>
+			<% if @recent_scheduled.length == 0 %>
+				<p>There are no scheduled workouts due to be marked as complete.</p>
+			<% else %>
+				<p>Have you completed the following workouts?</p>
+				<% @recent_scheduled.each do |workout| %>
+					<%= workout.workout_date %> - <%= workout.name %><br>
+				<% end %>
+			<% end %>
+		<% end %>
+		<h3><%= link_to "View All Workouts", workouts_url %></h3>
+		<p>View all of your completed and scheduled workouts in a list.</p>
+	</div>
+</div>

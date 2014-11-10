@@ -1,0 +1,50 @@
+<div class="row">
+	<div class="col-md-8">
+
+		<% @templates.each do |template| %>
+			<%= div_for template do %>
+				<%= check_box_tag 'template', template.id, nil, data: {template_name: template.name} %>
+				<%= label template.id, template.name %>
+				<%= select_tag :how_scheduled, options_for_select(["Schedule by number of days",
+																   "Select by days of week"]), 
+																   class: 'how_scheduled' %>
+				<br>
+				<div class="num_of_days">
+					Workout every 
+					<%= select_tag :every_num_of_days, options_for_select(["1","2","3","4","5","6","7"], "3") %>
+					 days.
+				</div>
+				<div class="days_of_week">
+					Workout on 
+					<%= check_box_tag :day_of_week, 1, nil, class: 'day_of_week' %>
+					<%= label_tag 'Monday' %>
+					<%= check_box_tag :day_of_week, 2, nil, class: 'day_of_week' %>
+					<%= label_tag 'Tuesday' %>
+					<%= check_box_tag :day_of_week, 3, nil, class: 'day_of_week' %>
+					<%= label_tag 'Wednesday' %>
+					<%= check_box_tag :day_of_week, 4, nil, class: 'day_of_week' %>
+					<%= label_tag 'Thursday' %>
+					<%= check_box_tag :day_of_week, 5, nil, class: 'day_of_week' %>
+					<%= label_tag 'Friday' %>
+					<%= check_box_tag :day_of_week, 6, nil, class: 'day_of_week' %>
+					<%= label_tag 'Saturday' %>
+					<%= check_box_tag :day_of_week, 0, nil, class: 'day_of_week' %>
+					<%= label_tag 'Sunday' %>
+				</div>
+				<br>
+				Schedule these workouts from <%= date_field_tag 'start_date', Date.today %>
+				 to <%= date_field_tag 'end_date', Date.today + 14 %>
+				<br>
+			<% end %>
+		<% end %>
+
+		<%= button_tag 'Preview', id: 'preview' %>
+		<%= button_tag 'Save', id: 'save', disabled: true %>
+		<span id='save_success'></span>
+
+		<div id="calendar"></div>
+
+	</div>
+</div>
+
+<%= render 'layouts/calendar_events' %>

@@ -1,6 +1,0 @@
-<% @workouts.each do |workout| %>
-  <%= div_for workout do %>
-    <%= link_to "Workouts ##{workout.id}", recorded_workout_url(workout.id) %>
-    <%= link_to "delete", workout, method: :delete, remote: true %><br>
-  <% end %>
-<% end %>

@@ -1,13 +1,11 @@
-$(document).ready(function(){
-
-});
-
 $(document).on('page:change', function(){
   $(".actual-seconds").each(updateTimeInputs);
+
 
   var clickedDate = getParameterByName('date');
   if (clickedDate){ 
     updateDate(clickedDate);
+    scheduledOrCompleted();
   }
 
   if ($("#calendar").length > 0){
@@ -17,95 +15,69 @@ $(document).on('page:change', function(){
 
 $(document).on('click', '.duplicateExercise', function(event){
   event.preventDefault();
-  parentSection = $(this).closest("tbody");
+  parentSection = $(this).closest(".exercise-fields");
   cloneExercise(parentSection);
 });
 
 $(document).on('click', '.removeExercise', function(event){
   event.preventDefault();
-  parentSection = $(this).closest("tbody").fadeOut();
+  parentSection = $(this).closest(".exercise-fields").fadeOut();
 });
 
 $(document).on('click', '.addExercise', function(event){
   event.preventDefault();
-  prevTBody = $(this).closest("tbody").prev("tbody");
-  cloneExercise(prevTBody).find('input').val('');
-
+  prevDiv = $(this).closest(".exercise-fields").prev(".exercise-fields");
+  cloneExercise(prevDiv).find('input').val('');
 });
+
+$(document).on('click', '#workout_workout_date_1i', scheduledOrCompleted);
+$(document).on('click', '#workout_workout_date_2i', scheduledOrCompleted);
+$(document).on('click', '#workout_workout_date_3i', scheduledOrCompleted);
+
+function getDateFromSelect(){
+  var year = $('#workout_workout_date_1i').val();
+  var month = $('#workout_workout_date_2i').val();
+  var date = $('#workout_workout_date_3i').val();
+  return (year + '-' + month + '-' + date);
+}
+
+function scheduledOrCompleted(){
+  var selectDate = getDateFromSelect();
+  if (moment().diff(selectDate, 'hours') < 0){
+    $('#workout_completed_false').prop('disabled', false).prop('checked', true);
+    $('#workout_completed_true').prop('disabled', true);
+  } else if (moment().diff(selectDate, 'hours') > 0){
+    $('#workout_completed_true').prop('disabled', false).prop('checked', true);
+    $('#workout_completed_false').prop('disabled', true);
+  } else {
+    $('#workout_completed_false').prop('disabled', false);
+    $('#workout_completed_true').prop('disabled', false);
+  }
+}
 
 function cloneExercise(exerciseSection){
   var selectedExercise = exerciseSection.find(":selected").val();
-  newSection = exerciseSection.clone();
+  var newSection = exerciseSection.clone();
   newSection.find("select").val(selectedExercise);
   exerciseSection.after(newSection);
   return newSection;
 }
 
 
-function adjustMinHours(minObject, min){
-  var hourObject = minObject.closest("td").find(".hours");
-  var currentHours = parseInt(hourObject.val()) || 0;
-  var extraHours = Math.floor(min / 60);
-  var extraMin = min - extraHours * 60;
-  var hours = currentHours + extraHours;
-  if (hours < 0) {
-    hourObject.val(0);
-    minObject.val(0);
-    return false;
-  } else {
-    hourObject.val(hours);
-    minObject.val(extraMin);
-  }
-}
-
-function adjustSecMin(secObject, sec){
-  var minObject = secObject.closest("td").find(".mins");
-  var currentMins = parseInt(minObject.val()) || 0;
-  var extraMins = Math.floor(sec / 60);
-  var extraSec = sec - extraMins * 60;
-  var min = currentMins + extraMins;
-  if (min < 0 ) {
-    var checkHours = adjustMinHours(minObject, min);
-    if (checkHours) {
-      secObject.val(extraSec);
-    } else {
-      minObject.val(0);
-      secObject.val(0);
-    }
-  } else {
-    minObject.val(min);
-    secObject.val(extraSec);
-    adjustMinHours(minObject, min);
-  }
-}
-
-function addTimesToActualSeconds(thisObject){
-  parentTd = thisObject.closest("td");
-  var hours = parseInt(parentTd.find(".hours").val()) || 0;
-  var minutes = parseInt(parentTd.find(".mins").val()) || 0;
-  var seconds = parseInt(parentTd.find(".secs").val()) || 0;
+function addTimesToActualSeconds(thisInput){
+  var parentClass = thisInput.closest(".cardio-time");
+  var hours = parseInt(parentClass.find(".hours").val()) || 0;
+  var minutes = parseInt(parentClass.find(".mins").val()) || 0;
+  var seconds = parseInt(parentClass.find(".secs").val()) || 0;
   var actualSeconds = hours * 3600 + minutes * 60 + seconds;
-  parentTd.find(".actual-seconds").val(actualSeconds);
+  parentClass.find(".actual-seconds").val(actualSeconds);
 }
 
-$(document).on('click keyup', '.mins', function(){
-  var minObject = $(this);
-  var min = parseInt(minObject.val()) || 0;
-  if (min >= 60 || min < 0) {adjustMinHours(minObject, min)}
-    addTimesToActualSeconds(minObject);
+$(document).on('click keyup', '.number-entry-time', function(){
+  var thisInput = $(this);
+  addTimesToActualSeconds(thisInput);
 });
 
-$(document).on('click keyup', '.secs', function(){
-  var secObject = $(this);
-  var sec = parseInt(secObject.val()) || 0;
-  if (sec >= 60 || sec < 0) {adjustSecMin(secObject, sec)}
-    addTimesToActualSeconds(secObject);
-});
-
-$(document).on('click keyup', '.hours', function(){
-  var hourObject = $(this);
-  addTimesToActualSeconds(hourObject);
-});
 
 function updateTimeInputs(){
   var parentTd = $(this).closest("td");
@@ -118,9 +90,9 @@ function updateTimeInputs(){
 }
 
 function updateDate(clickedDate){
-  $("#recorded_workout_workout_date_1i").val(clickedDate.substring(0,4));
-  $("#recorded_workout_workout_date_2i").val(removePrecedingZero(clickedDate.substring(5,7)));
-  $("#recorded_workout_workout_date_3i").val(removePrecedingZero(clickedDate.substring(8,10)));
+  $("#workout_workout_date_1i").val(clickedDate.substring(0,4));
+  $("#workout_workout_date_2i").val(removePrecedingZero(clickedDate.substring(5,7)));
+  $("#workout_workout_date_3i").val(removePrecedingZero(clickedDate.substring(8,10)));
 }
 
 function getParameterByName(name) {
@@ -147,3 +119,90 @@ $(document).on('click', '.select-component-type', function(){
     $('.times-select').show();
   }
 });
+
+$(document).on("click", '.how_scheduled', howDaysAreScheduled);
+
+function howDaysAreScheduled(){
+  if ($(this).val() === 'Schedule by number of days'){
+    $(this).closest('.template').find('.num_of_days').show();
+    $(this).closest('.template').find('.days_of_week').hide();
+  } else if ($(this).val() === 'Select by days of week'){
+    $(this).closest('.template').find('.num_of_days').hide();
+    $(this).closest('.template').find('.days_of_week').show();    
+  }
+}
+
+
+$(document).on('click', '#preview', generateSchedule);
+
+function generateSchedule(){
+  newEventsArray = []; //empty newEventsArray
+  $('.template').each(function(){
+    thisDiv = $(this);
+    if (thisDiv.find('[name=template]').prop('checked') === true){
+      var currentDate = moment(thisDiv.find('[name=start_date]').val());
+      var endDate = moment(thisDiv.find('[name=end_date]').val());
+      if (thisDiv.find('.how_scheduled').val() === 'Schedule by number of days'){
+        var everyNumDays = parseInt(thisDiv.find('[name=every_num_of_days]').val()); 
+        while (currentDate <= endDate){
+          newEventsArray.push({
+            title: thisDiv.find('[name=template]').data('template-name'),
+            start: currentDate.format('YYYY-MM-DD'),
+            color: '#00FF00',
+            textColor: 'black',
+            template_id: thisDiv.find('[name=template]').val()
+          });
+          currentDate.add(everyNumDays, 'd');
+        }
+      } else if (thisDiv.find('.how_scheduled').val() === 'Select by days of week'){
+        daysOfWeekArray = [];
+        thisDiv.find('.day_of_week').each(function(){
+          if ($(this).prop('checked') === true){
+            daysOfWeekArray.push(parseInt($(this).val()));
+          }
+        });
+        for (var j = 0; j < daysOfWeekArray.length; j++){
+          currentDate = moment(thisDiv.find('[name=start_date]').val());
+          var x = 0;
+          while (currentDate <= endDate){
+            if (currentDate.day() === daysOfWeekArray[j]){
+              newEventsArray.push({
+                title: thisDiv.find('[name=template]').data('template-name'),
+                start: currentDate.format('YYYY-MM-DD'),
+                color: '#00FF00',
+                textColor: 'black',
+                template_id: thisDiv.find('[name=template]').val()
+              });
+            }
+            currentDate.add(1, 'd');
+          }
+        }
+      }
+    }
+  });
+  var combinedEventsArray = newEventsArray.concat(eventsArray);
+  $('#calendar').fullCalendar('removeEvents')
+  $('#calendar').fullCalendar('addEventSource', combinedEventsArray);
+  $('#save').prop('disabled', false);
+}
+
+$(document).on('click', '#save', postData);
+
+function postData(){
+  $('#preview').prop('disabled', true);
+  $('#save').prop('disabled', true);
+  $.ajax({
+    type: 'POST',
+    url: '/save_schedule',
+    data: {scheduled: newEventsArray},
+    timeout: 2000,
+    success: function(response){
+      console.log(response.response);
+      $('#save_success').text('Schedule Saved!')
+    },
+    error: function(){
+      console.log('error');
+    }
+  });
+}
+

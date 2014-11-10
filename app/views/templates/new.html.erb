@@ -5,19 +5,21 @@
 
     <%= form_for(@workout) do |f| %>
 
-      <%= f.label "Name" %>
-      <%= f.text_field :name, value: @template_workout[:name] %><br>
+      <%= f.label "Name", class: 'sr-only' %>
+      <%= f.text_field :name, value: @template_workout[:name] %>
+
+      <br>
 
       <%= render 'layouts/workout_form', f: f %>
 
-        <tr>
-          <td></td>
-          <td><%= f.submit "Save Template"%></td>
-        </tr>
-
-      </table>
+      <%= f.submit "Save Template"%>
 
     <% end %>
 
+    <%= link_to "Add New Type of Exercise", new_workout_component_url %>
+
   </div>
+
+  <%= render 'layouts/right_panel' %>
+  
 </div>

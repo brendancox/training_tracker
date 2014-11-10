@@ -1,11 +1,17 @@
 class WorkoutsController < ApplicationController
 
+  def index
+    @workouts = Workout.all
+  end
+
   def new
+    @workout = Workout.new(params[:workout])
+    @templates = Template.all
   	generate_component_arrays 
     @template_workout = Hash.new
 
     if params[:scheduled]
-      load_template(ScheduledWorkout.find(params[:scheduled]))
+      load_template(Workout.find(params[:scheduled]))
     elsif params[:template]
       load_template(Template.find(params[:template]))
     else
@@ -15,12 +21,60 @@ class WorkoutsController < ApplicationController
     load_arrays_for_new_workout_form
   end
 
+  def create
+    this_workout = Workout.create(name: params[:workout][:name],
+                                          workout_date: flatten_date(params[:workout]),
+                                          workout_time: params[:workout][:workout_time],
+                                          notes: params[:workout][:notes],
+                                          completed: params[:workout][:completed])
+    save_component_times(this_workout, params[:workout][:times])
+    save_component_sets(this_workout, params[:workout][:sets])
+
+    redirect_to workout_url(this_workout)
+  end
+
+  def show
+    @this_workout = Workout.find(params[:id])
+  end
+
   def destroy
+    @workout = Workout.find(params[:id])
   	@workout.destroy
 
     respond_to do |format|
       format.js { render :layout => false }
       format.html {redirect_to root_path}
+    end
+  end
+
+  def schedule_workouts
+    @templates = Template.all
+    @workouts = Workout.all
+  end
+
+  def save_schedule
+    unless params[:scheduled].nil?
+      new_workouts_array = params[:scheduled]
+      templates = Template.all
+      new_workouts_array.each do |workout|
+        template_id = workout[1][:template_id].to_i
+        date = workout[1][:start]
+        this_template = templates.find(template_id)
+        times = this_template.component_times
+        sets = this_template.component_sets
+        new_workout = Workout.create(name: this_template[:name],
+                                            workout_date: date,
+                                            notes: this_template[:notes],
+                                            completed: false)
+        save_component_times(new_workout, times)
+        save_component_sets(new_workout, sets)
+      end
+    end
+
+    repsonse = {response: 'success'}
+
+    respond_to do |format|
+      format.json {render json: repsonse.to_json}
     end
   end
 
@@ -93,7 +147,7 @@ class WorkoutsController < ApplicationController
   def save_component_times(this_workout, time_params)
     unless time_params.nil?
       time_params.each do |time_param|
-        unless time_param[:meters].empty? && time_param[:seconds].empty?
+        unless time_param[:meters].blank? && time_param[:seconds].blank?
           this_workout.component_times.create(
                                 meters: time_param[:meters],
                                 seconds: time_param[:seconds],
@@ -108,7 +162,7 @@ class WorkoutsController < ApplicationController
   def save_component_sets(this_workout, set_params)
     unless set_params.nil?
       set_params.each do |set_param|
-        unless set_param[:reps].empty?
+        unless set_param[:reps].blank?
           grams = set_param[:grams].to_i * 1000 unless set_param[:grams].empty?
           this_workout.component_sets.create(
                                 grams: grams,

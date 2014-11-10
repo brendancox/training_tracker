@@ -2,9 +2,10 @@ Rails.application.routes.draw do
 
   root 'static_pages#home'
 
-  resources :workout_components, :recorded_workouts, :component_sets, :component_times, :templates, 
-            :scheduled_workouts
+  resources :workout_components, :workouts, :component_sets, :component_times, :templates
 
+  get 'schedule_workouts' => 'workouts#schedule_workouts', as: :schedule_workouts
+  post 'save_schedule' => 'workouts#save_schedule', as: :save_schedule
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

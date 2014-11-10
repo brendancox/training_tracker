@@ -1,0 +1,33 @@
+<h1>Add Workout</h1>
+
+<div class="row">
+  <div class="col-md-8">
+
+    <%= form_for(@workout) do |f| %>
+
+      <%= f.label "Name", class: 'sr-only' %>
+      <%= f.text_field :name, placeholder: 'Name - e.g. Cardio', value: @template_workout[:name] %><br>
+
+      <%= f.label "Date", class: 'sr-only' %>
+      <%= f.date_select :workout_date, default: @template_workout[:workout_date] %>
+      <%= f.select(:workout_time, ["","morning","afternoon","evening","night"]) %>
+
+      <%= f.radio_button :completed, :true %>
+      <%= f.label :completed_true, "Completed" %>
+      <%= f.radio_button :completed, :false %>
+      <%= f.label :completed_false, "Scheduled" %>
+      <br>
+
+      <%= render 'layouts/workout_form', f: f %>
+
+      <%= f.submit "Add Workout"%>
+
+    <% end %>
+
+    <%= link_to "Add New Type of Exercise", new_workout_component_url %>
+
+  </div>
+
+  <%= render 'layouts/right_panel' %>
+  
+</div>
