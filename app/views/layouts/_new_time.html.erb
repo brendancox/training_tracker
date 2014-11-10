@@ -12,7 +12,7 @@
       <%= h.hidden_field :seconds, value: @template_workout[:times][index][:seconds], 
                                 class: "actual-seconds" %>
     </span>
-    <%= h.number_field :rest, value: @template_workout[:times][index][:rest],
+     - Rest: <%= h.number_field :rest, value: @template_workout[:times][index][:rest],
                                 class: 'number-entry' %>s
     <%= h.select(:intensity_plan, ["","Increase Intensity Soon", "Decrease Intensity Soon"]) %>
     <%= link_to image_tag('remove.png'), '#', class: "removeExercise" %>

@@ -33,6 +33,29 @@ class WorkoutsController < ApplicationController
     redirect_to workout_url(this_workout)
   end
 
+  def edit
+    @workout = Workout.find(params[:id])
+    @templates = Template.all
+    generate_component_arrays 
+    @template_workout = Hash.new
+    load_template(@workout)
+
+    params.permit(:recorded_workout, times: [], sets: [])
+    @component_times = @template_workout[:times]
+    @component_sets = @template_workout[:sets]
+
+  end
+
+  def update
+    @workout = Workout.find(params[:id])
+
+    if @workout.update(params[:workout])
+      redirect_to @workout
+    else
+      render 'edit'
+    end
+  end
+
   def show
     @this_workout = Workout.find(params[:id])
   end
@@ -128,9 +151,10 @@ class WorkoutsController < ApplicationController
                                               stage: exercise.stage})
     end
     template.component_sets.each do |exercise|
+      kg = exercise.grams / 1000 unless exercise.grams.blank?
       @template_workout[:sets].push({workout_name: exercise.workout_component.name, 
                                              workout_id: exercise.workout_component.id,
-                                             kg: exercise.grams / 1000, 
+                                             kg: kg, 
                                              reps: exercise.reps, 
                                              num_of_sets: exercise.num_of_sets, 
                                              rest: exercise.rest, 

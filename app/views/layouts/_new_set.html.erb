@@ -8,7 +8,7 @@
     <%= h.number_field :reps, value: @template_workout[:sets][index][:reps], class: 'number-entry' %>reps 
     <%= h.number_field :num_of_sets, value: @template_workout[:sets][index][:num_of_sets], 
                             class: 'number-entry' %>sets 
-    <%= h.number_field :rest, value: @template_workout[:sets][index][:rest],
+     - Rest: <%= h.number_field :rest, value: @template_workout[:sets][index][:rest],
                             class: 'number-entry' %>s
     <%= h.select(:intensity_plan, ["","Increase Intensity Soon", "Decrease Intensity Soon"]) %>                       
     <%= link_to image_tag('remove.png'), '#', class: "removeExercise" %>
