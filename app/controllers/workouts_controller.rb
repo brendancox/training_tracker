@@ -50,7 +50,7 @@ class WorkoutsController < ApplicationController
   def destroy
     @workout = Workout.find(params[:id])
   	@workout.destroy
-
+    @workouts = Workout.all
     respond_to do |format|
       format.js { render :layout => false }
       format.html {redirect_to root_path}
@@ -78,17 +78,6 @@ class WorkoutsController < ApplicationController
 
     respond_to do |format|
       format.json {render json: response.to_json}
-    end
-  end
-
-  def add_dynamic_field
-    if params[:field_type] == 'reps'
-      @workout.component_sets.new()
-      respond_to do |format|
-        format.json {render 'layouts/new_sets'}
-      end
-    else
-      @workout.component_times.new()
     end
   end
 

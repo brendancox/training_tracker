@@ -1,27 +1,8 @@
 <h1>Template #<%= @this_workout.id %></h1>
 
-<% @this_workout.component_sets.each do |component_set| %>
+<%= render 'layouts/show_exercises' %>
 
-  <%= component_set.workout_component.name %>
-  <% unless component_set.kg.nil? %>
-    <%= component_set.kg %>kg,
-  <% end %>
-  <%= component_set.reps %> reps <br>
-
-<% end %>
-
-<% @this_workout.component_times.each do |component_time| %>
-
-  <%= component_time.workout_component.name %>
-  <% unless component_time.meters.nil? %>
-    <%= component_time.meters %> meters,
-  <% end %>
-  <% unless component_time.seconds.nil? %>
-    <%= component_time.seconds %> seconds
-  <% end %>
-  <br>
-
-<% end %>
+<p><%= @this_workout.notes %></p>
 
 <%= link_to "update", edit_template_path %><br>
 <%= link_to "delete", template_path, method: :delete %><br>

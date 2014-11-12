@@ -1,0 +1,42 @@
+
+<table class='table'>
+
+  <% unless @this_workout.component_sets.empty? %>
+    <tr>
+      <th>Exercise</th>
+      <th>Weight (kg)</th>
+      <th>Reps</th>
+      <th>Sets</th>
+      <th>Rest</th>
+    </tr>
+  <% end %>
+
+  <% @this_workout.component_sets.each do |component_set| %>
+    <tr>
+      <td><%= component_set.workout_component.name %></td>
+      <td><%= component_set.kg %></td>
+      <td><%= component_set.reps %></td>
+      <td><%= component_set.num_of_sets %></td>
+      <td><%= component_set.rest %></td>
+    </tr>
+  <% end %>
+
+  <% unless @this_workout.component_times.empty? %>
+    <tr>
+      <th>Exercise</th>
+      <th>Distance (m)</th>
+      <th>Time (s)</th>
+      <th>--</th>
+      <th>Rest</th>
+    </tr>
+  <% end %>
+
+  <% @this_workout.component_times.each do |component_time| %>
+    <tr>
+      <td><%= component_time.workout_component.name %></td>
+      <td><%= component_time.meters %></td>
+      <td><%= component_time.seconds %></td>
+    </tr>
+  <% end %>
+
+</table>

@@ -25,7 +25,10 @@
 			<% else %>
 				<p>Have you completed the following workouts?</p>
 				<% @recent_scheduled.each do |workout| %>
-					<%= workout.workout_date %> - <%= workout.name %><br>
+					<%= div_for workout do %>
+						<%= workout.workout_date %> - <%= workout.name %>
+						- <%= link_to "View", workout_url(workout.id) %>
+					<% end %>
 				<% end %>
 			<% end %>
 		<% end %>
