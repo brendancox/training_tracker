@@ -1,12 +1,12 @@
 Rails.application.routes.draw do
 
+  devise_for :users
   root 'static_pages#home'
 
   resources :workout_components, :workouts, :templates
 
   get 'schedule_workouts' => 'workouts#schedule_workouts', as: :schedule_workouts
   post 'save_schedule' => 'workouts#save_schedule', as: :save_schedule
-  post 'add_dynamic_field' => 'workouts#add_dynamic_field', as: :add_dynamic_field
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
