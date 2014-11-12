@@ -1,16 +1,20 @@
-<h1>Workout #<%= @this_workout.id %></h1>
+<h1><%= @this_workout.name %></h1>
 
 <%= @this_workout.workout_date.to_s %><br>
 
-<% @this_workout.component_sets.each do |component_set| %>
+  <% @this_workout.component_sets.each do |component_set| %>
 
-  <%= component_set.workout_component.name %>
-  <% unless component_set.grams.nil? %>
-    <%= component_set.grams %> grams,
+    <%= component_set.workout_component.name %>
+    <% unless component_set.kg.nil? %>
+      <%= component_set.kg %>kg
+    <% end %>
+    <%= component_set.reps %> - reps x 
+
+    <% unless component_set.num_of_sets.nil? %>
+      <%= component_set.num_of_sets %> sets
+    <% end %>
+    <br>
   <% end %>
-  <%= component_set.reps %> reps <br>
-
-<% end %>
 
 <% @this_workout.component_times.each do |component_time| %>
 

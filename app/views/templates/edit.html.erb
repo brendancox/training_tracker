@@ -1,4 +1,4 @@
-<h1>Update Workout</h1>
+<h1>Update Template</h1>
 
 <div class="row">
   <div class="col-md-8">
@@ -7,15 +7,6 @@
 
       <%= f.label "Name", class: 'sr-only' %>
       <%= f.text_field :name, placeholder: 'Name - e.g. Cardio' %><br>
-
-      <%= f.label "Date", class: 'sr-only' %>
-      <%= f.date_select :workout_date %>
-      <%= f.select(:workout_time, ["","morning","afternoon","evening","night"]) %>
-
-      <%= f.radio_button :completed, :true %>
-      <%= f.label :completed_true, "Completed" %>
-      <%= f.radio_button :completed, :false %>
-      <%= f.label :completed_false, "Scheduled" %>
       <br>
 
       <%= render 'layouts/workout_form2', f: f %>

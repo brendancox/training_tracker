@@ -11,11 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141105054300) do
+ActiveRecord::Schema.define(version: 20141112002130) do
 
   create_table "component_sets", force: true do |t|
     t.integer  "workout_id"
-    t.integer  "grams"
     t.integer  "reps"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -25,6 +24,8 @@ ActiveRecord::Schema.define(version: 20141105054300) do
     t.string   "stage"
     t.integer  "template_id"
     t.string   "intensity_plan"
+    t.integer  "order"
+    t.float    "kg"
   end
 
   create_table "component_times", force: true do |t|
@@ -38,6 +39,7 @@ ActiveRecord::Schema.define(version: 20141105054300) do
     t.string   "stage"
     t.integer  "template_id"
     t.string   "intensity_plan"
+    t.integer  "order"
   end
 
   create_table "templates", force: true do |t|

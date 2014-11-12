@@ -190,7 +190,7 @@ $(document).on('click', '#save', postData);
 
 function postData(){
   $('#preview').prop('disabled', true);
-  $('#save').prop('disabled', true);
+  //$('#save').prop('disabled', true);
   $.ajax({
     type: 'POST',
     url: '/save_schedule',

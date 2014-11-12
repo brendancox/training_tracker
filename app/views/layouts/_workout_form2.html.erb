@@ -1,0 +1,34 @@
+
+  <%= f.fields_for :component_times do |h| %>
+    <div>
+      <%= h.select(:workout_component_id, @time_component_array) %>
+      <%= h.number_field :meters, class: 'number-entry' %>meters 
+      <span class="cardio-time">
+        <input type="number" class="number-entry-time hours" min="0" max="60" placeholder="hh">
+        <input type="number" class="number-entry-time mins" min="0" max="60" placeholder="mm">
+        <input type="number" class="number-entry-time secs" min="0" max="72" placeholder="ss">
+        <%= h.hidden_field :seconds, class: "actual-seconds" %>
+      </span>
+       - Rest: <%= h.number_field :rest, class: 'number-entry' %>s
+      
+      <%= link_to image_tag('remove.png'), '#', class: "removeExercise" %>
+      <%= link_to "Duplicate", '#', class: "duplicateExercise" %>
+    </div>
+  <% end %>
+
+  <%= f.fields_for :component_sets do |h| %>
+    <div>
+      <%= h.select(:workout_component_id, @set_component_array) %>
+      <%= h.number_field :kg, class: 'number-entry'  %>kg 
+      <%= h.number_field :reps, class: 'number-entry' %>reps 
+      <%= h.number_field :num_of_sets, class: 'number-entry' %>sets 
+       - Rest: <%= h.number_field :rest, class: 'number-entry' %>s
+           
+      <%= link_to image_tag('remove.png'), '#', class: "removeExercise" %>
+      <%= link_to "Duplicate", '#', class: "duplicateExercise" %>
+    </div>
+  <% end %>
+
+  <%= f.label "Notes", class: 'sr-only' %>
+  <%= f.text_area :notes, placeholder: 'Notes' %>
+  <br>

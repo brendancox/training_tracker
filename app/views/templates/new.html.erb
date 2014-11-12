@@ -6,11 +6,11 @@
     <%= form_for(@workout) do |f| %>
 
       <%= f.label "Name", class: 'sr-only' %>
-      <%= f.text_field :name, value: @template_workout[:name] %>
+      <%= f.text_field :name %>
 
       <br>
 
-      <%= render 'layouts/workout_form', f: f %>
+      <%= render 'layouts/workout_form2', f: f %>
 
       <%= f.submit "Save Template"%>
 

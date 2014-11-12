@@ -3,8 +3,8 @@
 <% @this_workout.component_sets.each do |component_set| %>
 
   <%= component_set.workout_component.name %>
-  <% unless component_set.grams.nil? %>
-    <%= component_set.grams %> grams,
+  <% unless component_set.kg.nil? %>
+    <%= component_set.kg %>kg,
   <% end %>
   <%= component_set.reps %> reps <br>
 
@@ -23,5 +23,6 @@
 
 <% end %>
 
+<%= link_to "update", edit_template_path %><br>
 <%= link_to "delete", template_path, method: :delete %><br>
 <%= link_to "Record or schedule workout with this template", new_workout_url(template: @this_workout.id) %><br>

@@ -8,20 +8,35 @@ class TemplatesController < WorkoutsController
   def new
     super
     @workout = Template.new(params[:template])
+    if params[:template]
+      load_template(Template.find(params[:template]))
+    else
+      set_template_to_default
+    end
   end
 
   def create
-    this_workout = Template.create(name: params[:template][:name], 
-                                   notes: params[:template][:notes])
-    save_component_times(this_workout, params[:template][:times])
-    save_component_sets(this_workout, params[:template][:sets])
-
+    this_workout = Template.create(template_params)
     redirect_to template_url(this_workout)
+  end
+
+  def edit
+    @workout = Template.find(params[:id])
+    @templates = Template.all
+    generate_component_arrays
+  end
+
+  def update
+    @workout = Template.find(params[:id])
+    if @workout.update(template_params)
+      redirect_to @workout
+    else
+      render 'edit'
+    end
   end
 
   def show
     @this_workout = Template.find(params[:id])
-
   end
 
   def destroy
@@ -34,4 +49,13 @@ class TemplatesController < WorkoutsController
     end
     
   end
+
+  private
+
+  def template_params
+    params.require(:template).permit(:name, :notes, 
+      component_sets_attributes: [:id, :kg, :reps, :num_of_sets, :workout_component_id, :rest, :intensity_plan], 
+      component_times_attributes: [:id, :meters, :seconds, :workout_component_id, :rest, :intensity_plan])
+  end
+
 end
