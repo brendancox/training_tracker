@@ -54,8 +54,8 @@ class TemplatesController < WorkoutsController
 
   def template_params
     params.require(:template).permit(:name, :notes, 
-      component_sets_attributes: [:id, :kg, :reps, :num_of_sets, :workout_component_id, :rest, :intensity_plan], 
-      component_times_attributes: [:id, :meters, :seconds, :workout_component_id, :rest, :intensity_plan])
+      component_sets_attributes: [:id, :kg, :reps, :num_of_sets, :workout_component_id, :rest, :_destroy], 
+      component_times_attributes: [:id, :meters, :seconds, :workout_component_id, :rest, :_destroy])
   end
 
 end

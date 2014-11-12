@@ -1,33 +1,29 @@
 $(document).on('page:change', function(){
   $(".actual-seconds").each(updateTimeInputs);
-
-
-  var clickedDate = getParameterByName('date');
-  if (clickedDate){ 
-    updateDate(clickedDate);
-    scheduledOrCompleted();
-  }
+  scheduledOrCompleted();
+  checkForFormDivsToHide();
 
   if ($("#calendar").length > 0){
     runFullCalendar();
   }
 });
 
-$(document).on('click', '.duplicateExercise', function(event){
-  event.preventDefault();
-  parentSection = $(this).closest(".exercise-fields");
-  cloneExercise(parentSection);
-});
 
 $(document).on('click', '.removeExercise', function(event){
   event.preventDefault();
-  parentSection = $(this).closest(".exercise-fields").fadeOut();
+  parentSection = $(this).closest(".exercise-fields").hide();
+  parentSection.find('.destroy').val(true);
 });
 
-$(document).on('click', '.addExercise', function(event){
+
+$(document).on('click', '.addCardioExercise', function(event){
   event.preventDefault();
-  prevDiv = $(this).closest(".exercise-fields").prev(".exercise-fields");
-  cloneExercise(prevDiv).find('input').val('');
+  addSet('times');
+});
+
+$(document).on('click', '.addRepsExercise', function(event){
+  event.preventDefault();
+  addSet('sets');
 });
 
 $(document).on('click', '#workout_workout_date_1i', scheduledOrCompleted);
@@ -80,32 +76,15 @@ $(document).on('click keyup', '.number-entry-time', function(){
 
 
 function updateTimeInputs(){
-  var parentTd = $(this).closest("td");
-  var actualSeconds = parentTd.find(".actual-seconds").val();
+  var parentSection = $(this).closest(".exercise-fields");
+  var actualSeconds = parentSection.find(".actual-seconds").val();
   if (actualSeconds > 0) {
-    var secObject = parentTd.find(".secs");
-    secObject.val(actualSeconds);
-    adjustSecMin(secObject, actualSeconds);
-  }
-}
-
-function updateDate(clickedDate){
-  $("#workout_workout_date_1i").val(clickedDate.substring(0,4));
-  $("#workout_workout_date_2i").val(removePrecedingZero(clickedDate.substring(5,7)));
-  $("#workout_workout_date_3i").val(removePrecedingZero(clickedDate.substring(8,10)));
-}
-
-function getParameterByName(name) {
-    var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
-    return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
-}
-
-function removePrecedingZero(numString){
-  //removes preceding zero in a 2 digit number (of type string)
-  if (numString.substring(0,1) == '0'){
-    return numString.substring(1,2);
-  } else {
-    return numString;
+    var seconds = actualSeconds % 60;
+    var minutes = (actualSeconds - seconds) / 60 % 60;
+    var hours = ((actualSeconds - seconds) / 60 - minutes) / 60;
+    parentSection.find('.hours').val(hours);
+    parentSection.find('.mins').val(minutes);
+    parentSection.find('.secs').val(seconds);
   }
 }
 
@@ -206,3 +185,34 @@ function postData(){
   });
 }
 
+function addSet(type){
+  var newDiv = $('.' + type + ':first').clone();
+  $('.exercise-fields').last().after(newDiv);
+  newDiv.show();
+  newDiv.find('input').each(function(){
+    var thisInput = $(this);
+    thisInput.val('');
+    if (!thisInput.hasClass('number-entry-time')){
+      var thisId = thisInput.attr('id');
+      var thisName = thisInput.attr('name');
+      thisInput.attr('id', thisId.replace('0', componentsCount[type]));
+      thisInput.attr('name', thisName.replace('0', componentsCount[type]));
+      console.log(thisInput.attr('id'));
+    }
+  });
+  var selectId = newDiv.find('select').attr('id');
+  var selectName = newDiv.find('select').attr('name');
+  newDiv.find('select').attr('id', selectId.replace('0', componentsCount[type]));
+  newDiv.find('select').attr('name', selectName.replace('0', componentsCount[type]));
+  componentsCount[type]++;
+}
+
+
+function checkForFormDivsToHide(){
+  if ($('#workout_component_times_attributes_0_order').val() === '-1'){
+    $('#workout_component_times_attributes_0_order').closest('.exercise-fields').hide();
+  }
+  if ($('#workout_component_sets_attributes_0_order').val() === '-1'){
+    $('#workout_component_sets_attributes_0_order').closest('.exercise-fields').hide();
+  }
+}

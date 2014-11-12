@@ -1,0 +1,15 @@
+
+  
+  <%= f.fields_for :component_sets do |h| %>
+    <div class='exercise-fields sets'>
+      <%= h.hidden_field :order %>
+      <%= h.select(:workout_component_id, @set_component_array) %>
+      <%= h.number_field :kg, class: 'number-entry'  %>kg 
+      <%= h.number_field :reps, class: 'number-entry' %>reps 
+      <%= h.number_field :num_of_sets, class: 'number-entry' %>sets 
+       - Rest: <%= h.number_field :rest, class: 'number-entry' %>s
+      <%= h.hidden_field '_destroy', value: false, class: 'destroy' %>
+      <%= link_to image_tag('remove.png'), '#', class: "removeExercise" %>
+    </div>
+    <script type='text/javascript'>componentsCount['sets']++;</script>
+  <% end %>

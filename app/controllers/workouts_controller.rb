@@ -7,13 +7,14 @@ class WorkoutsController < ApplicationController
   def new
     @templates = Template.all
   	generate_component_arrays 
-
     @workout = Workout.new(params[:workout])
     if params[:template]
       load_template(Template.find(params[:template]))
     else
       set_template_to_default
     end
+
+    @workout.workout_date = params[:date] if params[:date]
   end
 
   def create
@@ -25,6 +26,12 @@ class WorkoutsController < ApplicationController
     @workout = Workout.find(params[:id])
     @templates = Template.all
     generate_component_arrays
+    if @workout.component_sets.count == 0
+      @workout.component_sets.new(order: -1)
+    end
+    if @workout.component_times.count == 0
+      @workout.component_times.new(order: -1)
+    end
   end
 
   def update
@@ -67,10 +74,21 @@ class WorkoutsController < ApplicationController
       end
     end
 
-    repsonse = {response: 'success'}
+    response = {response: 'success'}
 
     respond_to do |format|
-      format.json {render json: repsonse.to_json}
+      format.json {render json: response.to_json}
+    end
+  end
+
+  def add_dynamic_field
+    if params[:field_type] == 'reps'
+      @workout.component_sets.new()
+      respond_to do |format|
+        format.json {render 'layouts/new_sets'}
+      end
+    else
+      @workout.component_times.new()
     end
   end
 
@@ -78,8 +96,8 @@ class WorkoutsController < ApplicationController
 
   def workout_params
     params.require(:workout).permit(:name, :workout_date, :workout_time, :completed, :notes, 
-      component_sets_attributes: [:id, :kg, :reps, :num_of_sets, :workout_component_id, :rest, :intensity_plan], 
-      component_times_attributes: [:id, :meters, :seconds, :workout_component_id, :rest, :intensity_plan])
+      component_sets_attributes: [:id, :kg, :reps, :num_of_sets, :workout_component_id, :rest, :_destroy], 
+      component_times_attributes: [:id, :meters, :seconds, :workout_component_id, :rest, :_destroy])
   end
 
 
