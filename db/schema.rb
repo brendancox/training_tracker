@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141113011237) do
+ActiveRecord::Schema.define(version: 20141113050004) do
 
   create_table "component_sets", force: true do |t|
     t.integer  "workout_id"
@@ -73,8 +73,7 @@ ActiveRecord::Schema.define(version: 20141113011237) do
     t.string   "component_type"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "reps_equipment"
-    t.string   "times_equipment"
+    t.string   "equipment"
     t.integer  "user_id"
   end
 

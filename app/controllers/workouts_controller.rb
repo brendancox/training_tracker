@@ -95,26 +95,46 @@ class WorkoutsController < ApplicationController
 
   def generate_component_arrays
     #initialize arrays to help form the exercise select boxes
-    time_components = WorkoutComponent.where(component_type: "Time")
     @time_component_array = Array.new
+    time_components = WorkoutComponent.where(component_type: "Time").where(equipment: 'Machine')
+    @time_component_array.push(['**Cardio Equipment**',''])
     time_components.each do |time_component|
       @time_component_array.push([time_component.name, time_component.id])
     end
-    set_components = WorkoutComponent.where(component_type: "Reps")
+    time_components = WorkoutComponent.where(component_type: "Time").where(equipment: 'Road/Track')
+    @time_component_array.push(['',''])
+    @time_component_array.push(['**Road/Track**',''])
+    time_components.each do |time_component|
+      @time_component_array.push([time_component.name, time_component.id])
+    end
     @set_component_array = Array.new
+    set_components = WorkoutComponent.where(component_type: "Reps").where(equipment: 'Machine')
+    @set_component_array.push(['**Gym Machines**',''])
+    set_components.each do |set_component|
+      @set_component_array.push([set_component.name, set_component.id])
+    end
+        set_components = WorkoutComponent.where(component_type: "Reps").where(equipment: 'Free Weights')
+    @set_component_array.push(['',''])
+    @set_component_array.push(['**Free Weights**',''])
+    set_components.each do |set_component|
+      @set_component_array.push([set_component.name, set_component.id])
+    end
+        set_components = WorkoutComponent.where(component_type: "Reps").where(equipment: 'Body Weight Only')
+    @set_component_array.push(['',''])
+    @set_component_array.push(['**Body Weight Only**',''])
     set_components.each do |set_component|
       @set_component_array.push([set_component.name, set_component.id])
     end
   end
 
   def set_template_to_default
-    #match template arrays to component arrays
-    @time_component_array.each do |time_component|
-      @workout.component_times.new(workout_component_id: time_component[1])
-    end
-    @set_component_array.each do |set_component|
-      @workout.component_sets.new(workout_component_id: set_component[1])
-    end
+    #add some common workouts to get user started when opening blank 
+    running = WorkoutComponent.where(name: 'Treadmill').first
+    crunches = WorkoutComponent.where(name: 'Crunches').first
+    pressups = WorkoutComponent.where(name: 'Press-ups').first
+    @workout.component_times.new(workout_component_id: running.id)
+    @workout.component_sets.new(workout_component_id: crunches.id)
+    @workout.component_sets.new(workout_component_id: pressups.id)
   end
 
   def load_template(template, add_hidden_fields_to_copy)
