@@ -1,9 +1,15 @@
 class StaticPagesController < ApplicationController
 
   def home
-  	@workouts = Workout.all
-  	@templates = Template.all
-  	@recent_scheduled = Workout.recent_scheduled
+  	if user_signed_in?
+	  @workouts = current_user.workouts.all
+	  @templates = current_user.templates.all
+	  @recent_scheduled = @workouts.recent_scheduled
+  	else
+  	  @workouts = []
+  	  @templates = []
+  	  @recent_scheduled = []
+  	end
   end
 
 end

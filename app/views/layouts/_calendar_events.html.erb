@@ -7,7 +7,7 @@
 		        {	
 		        	<% if workout.completed == true %>
 			        	<% if workout.name.empty? %>
-			            	title: 'Workout <%= workout.id %>',
+			            	title: 'Workout',
 			            <% else %>
 			            	title: '<%= workout.name %>',
 			            <% end %>
@@ -30,7 +30,7 @@
 			            <% end %>
 			        <% else %>
 			        				        	<% if workout.name.empty? %>
-			            	title: 'Workout <%= workout.id %>',
+			            	title: 'Workout',
 			            <% else %>
 			            	title: '<%= workout.name %>',
 			            <% end %>

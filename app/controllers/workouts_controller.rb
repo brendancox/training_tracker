@@ -1,15 +1,17 @@
 class WorkoutsController < ApplicationController
 
+  before_action :authenticate_user!
+
   def index
-    @workouts = Workout.all
+    @workouts = current_user.workouts.all
   end
 
   def new
-    @templates = Template.all
+    @templates = current_user.templates.all
   	generate_component_arrays 
     @workout = Workout.new(params[:workout])
     if params[:template]
-      load_template(Template.find(params[:template]))
+      load_template(current_user.templates.find(params[:template]))
     else
       set_template_to_default
     end
@@ -23,8 +25,8 @@ class WorkoutsController < ApplicationController
   end
 
   def edit
-    @workout = Workout.find(params[:id])
-    @templates = Template.all
+    @workout = current_user.workouts.find(params[:id])
+    @templates = current_user.templates.all
     generate_component_arrays
     if @workout.component_sets.count == 0
       @workout.component_sets.new(order: -1)
@@ -35,7 +37,7 @@ class WorkoutsController < ApplicationController
   end
 
   def update
-    @workout = Workout.find(params[:id])
+    @workout = current_user.workouts.find(params[:id])
     if @workout.update(workout_params)
       redirect_to @workout
     else
@@ -44,13 +46,13 @@ class WorkoutsController < ApplicationController
   end
 
   def show
-    @this_workout = Workout.find(params[:id])
+    @this_workout = current_user.workouts.find(params[:id])
   end
 
   def destroy
-    @workout = Workout.find(params[:id])
+    @workout = current_user.workouts.find(params[:id])
   	@workout.destroy
-    @workouts = Workout.all
+    @workouts = current_user.workouts.all
     respond_to do |format|
       format.js { render :layout => false }
       format.html {redirect_to root_path}
@@ -58,8 +60,8 @@ class WorkoutsController < ApplicationController
   end
 
   def schedule_workouts
-    @templates = Template.all
-    @workouts = Workout.all
+    @templates = current_user.templates.all
+    @workouts = current_user.workouts.all
   end
 
   def save_schedule
@@ -68,8 +70,9 @@ class WorkoutsController < ApplicationController
       new_workouts_array.each do |workout|
         date = workout[1][:start]
         @workout = Workout.new(workout_date: date,
-                               completed: false)
-        load_template(Template.find(workout[1][:template_id].to_i))
+                               completed: false,
+                               user_id: current_user.id)
+        load_template(current_user.templates.find(workout[1][:template_id].to_i))
         @workout.save
       end
     end
@@ -86,7 +89,7 @@ class WorkoutsController < ApplicationController
   def workout_params
     params.require(:workout).permit(:name, :workout_date, :workout_time, :completed, :notes, 
       component_sets_attributes: [:id, :kg, :reps, :num_of_sets, :workout_component_id, :rest, :_destroy], 
-      component_times_attributes: [:id, :meters, :seconds, :workout_component_id, :rest, :_destroy])
+      component_times_attributes: [:id, :meters, :seconds, :workout_component_id, :rest, :_destroy]).merge(user_id: current_user.id)
   end
 
 

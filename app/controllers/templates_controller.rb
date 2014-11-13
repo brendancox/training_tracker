@@ -1,7 +1,9 @@
 class TemplatesController < WorkoutsController
 
+  before_action :authenticate_user!
+
   def index
-    @workouts = Template.all
+    @workouts = current_user.templates.all
   end
 
 
@@ -9,7 +11,7 @@ class TemplatesController < WorkoutsController
     super
     @workout = Template.new(params[:template])
     if params[:template]
-      load_template(Template.find(params[:template]))
+      load_template(current_user.templates.find(params[:template]))
     else
       set_template_to_default
     end
@@ -21,13 +23,13 @@ class TemplatesController < WorkoutsController
   end
 
   def edit
-    @workout = Template.find(params[:id])
-    @templates = Template.all
+    @workout = current_user.templates.find(params[:id])
+    @templates = current_user.templates.all
     generate_component_arrays
   end
 
   def update
-    @workout = Template.find(params[:id])
+    @workout = current_user.templates.find(params[:id])
     if @workout.update(template_params)
       redirect_to @workout
     else
@@ -36,11 +38,11 @@ class TemplatesController < WorkoutsController
   end
 
   def show
-    @this_workout = Template.find(params[:id])
+    @this_workout = current_user.templates.find(params[:id])
   end
 
   def destroy
-    @workout = Template.find(params[:id])
+    @workout = current_user.templates.find(params[:id])
     @workout.destroy
 
     respond_to do |format|
@@ -55,7 +57,7 @@ class TemplatesController < WorkoutsController
   def template_params
     params.require(:template).permit(:name, :notes, 
       component_sets_attributes: [:id, :kg, :reps, :num_of_sets, :workout_component_id, :rest, :_destroy], 
-      component_times_attributes: [:id, :meters, :seconds, :workout_component_id, :rest, :_destroy])
+      component_times_attributes: [:id, :meters, :seconds, :workout_component_id, :rest, :_destroy]).merge(user_id: current_user.id)
   end
 
 end
