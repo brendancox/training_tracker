@@ -5,4 +5,5 @@ class WorkoutComponent < ActiveRecord::Base
   has_many :template_times
   has_many :scheduled_sets
   has_many :scheduled_times
+  belongs_to :user
 end

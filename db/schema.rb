@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141112113352) do
+ActiveRecord::Schema.define(version: 20141113011237) do
 
   create_table "component_sets", force: true do |t|
     t.integer  "workout_id"
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 20141112113352) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
+    t.integer  "user_id"
   end
 
   create_table "users", force: true do |t|
@@ -74,6 +75,7 @@ ActiveRecord::Schema.define(version: 20141112113352) do
     t.datetime "updated_at"
     t.string   "reps_equipment"
     t.string   "times_equipment"
+    t.integer  "user_id"
   end
 
   create_table "workouts", force: true do |t|
@@ -85,6 +87,7 @@ ActiveRecord::Schema.define(version: 20141112113352) do
     t.boolean  "completed",    default: true
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
 end
