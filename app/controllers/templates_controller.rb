@@ -12,7 +12,7 @@ class TemplatesController < WorkoutsController
     super
     @workout = Template.new(params[:template])
     if params[:template]
-      load_template(current_user.templates.find(params[:template]))
+      load_template(current_user.templates.find(params[:template]), true)
     else
       set_template_to_default
     end

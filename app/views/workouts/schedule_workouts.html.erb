@@ -1,4 +1,8 @@
+<h3>Create Full Schedule</h3>
+<br>
+
 		<% @templates.each do |template| %>
+		<div class="template-container">
 			<%= div_for template do %>
 				<%= check_box_tag 'template', template.id, nil, data: {template_name: template.name} %>
 				<%= label template.id, template.name %>
@@ -33,12 +37,16 @@
 				 to <%= date_field_tag 'end_date', Date.today + 14 %>
 				<br>
 			<% end %>
+		</div>
 		<% end %>
+		<div class="template-container">
+			<%= button_tag 'Preview', id: 'preview' %>
+			<%= button_tag 'Save', id: 'save', disabled: true %>
+			<span id='save_success'></span>
+		</div>
 
-		<%= button_tag 'Preview', id: 'preview' %>
-		<%= button_tag 'Save', id: 'save', disabled: true %>
-		<span id='save_success'></span>
-
-		<div id="calendar"></div>
+		<div class='calendar-container'>
+			<div id='calendar'></div>
+		</div>
 
 <%= render 'layouts/calendar_events' %>

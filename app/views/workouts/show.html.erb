@@ -1,6 +1,13 @@
 <h1><%= @this_workout.name %></h1>
 
-<h3><%= @this_workout.workout_date.to_s %></h3>
+<h3>
+	<% if @this_workout.completed %>
+		Completed on 
+	<% else %>
+		Scheduled for 
+	<% end %>
+	<%= @this_workout.workout_date.to_s %>
+</h3>
 
 <%= render 'layouts/show_exercises' %>
 

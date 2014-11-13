@@ -1,9 +1,11 @@
-<h1>Add Workout</h1>
+<h3>Add Workout</h3>
+
+<br>
 
     <%= form_for(@workout) do |f| %>
 
       <%= f.label "Name", class: 'sr-only' %>
-      <%= f.text_field :name, placeholder: 'Name - e.g. Cardio' %><br>
+      <%= f.text_field :name, placeholder: 'Name - e.g. Cardio' %> - 
       <%= f.label "Date", class: 'sr-only' %>
       <%= f.date_select :workout_date %>
       <%= f.select(:workout_time, ["","morning","afternoon","evening","night"]) %>
@@ -12,6 +14,7 @@
       <%= f.label :completed_true, "Completed" %>
       <%= f.radio_button :completed, :false %>
       <%= f.label :completed_false, "Scheduled" %>
+      <br>
       <br>
 
       <%= render 'layouts/workout_form2', f: f %>

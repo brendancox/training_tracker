@@ -37,7 +37,15 @@
 		<p>View all of your completed and scheduled workouts in a list.</p>
 	  <% else %>
 	  	<h3>Welcome</h3>
-	  	<p>To begin using this site, sign up using the link in the header.</p>
+	  	<p>This site allows you to record and schedule your exercise.</p>
+	  	<p>You will be able to create exercise 'templates', such as one for a cardio workout and 
+	  	  another for a strength workout. You can then easily schedule these workouts one-by-one 
+	  	  or in bulk.</p>
+	  	<p>To begin using this site, <%= link_to 'sign up', new_user_registration_path %> or 
+	  		<%= link_to 'log in', new_user_session_path %>.</p>
+	  	<br>
+	  	<p>The code for this site is publicly available on github. Developers may like to view it 
+	  		<a href='http://github.com/brendancox/training_tracker'>here</a>.</p>
 	  <% end %>
 	</div>
 </div>

@@ -1,10 +1,11 @@
-<h1>Add Workout Template</h1>
+<h3>Add Workout Template</h3>
 
+<br>
     <%= form_for(@workout) do |f| %>
 
       <%= f.label "Name", class: 'sr-only' %>
       <%= f.text_field :name, placeholder: 'Name - e.g. Cardio' %>
-
+      <br>
       <br>
 
       <%= render 'layouts/workout_form2', f: f %>

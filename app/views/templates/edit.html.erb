@@ -1,9 +1,10 @@
-<h1>Update Template</h1>
-
+<h3>Update Template</h3>
+<br>
     <%= form_for(@workout) do |f| %>
 
       <%= f.label "Name", class: 'sr-only' %>
       <%= f.text_field :name, placeholder: 'Name - e.g. Cardio' %><br>
+      <br>
       <br>
 
       <%= render 'layouts/workout_form2', f: f %>
@@ -11,6 +12,3 @@
       <%= f.submit "Update Workout"%>
 
     <% end %>
-
-  
-</div>

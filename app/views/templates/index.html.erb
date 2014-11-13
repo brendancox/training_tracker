@@ -1,6 +1,24 @@
+<h3>All Templates</h3>
+<br>
+
+<table class="table">
+
+
 <% @workouts.each do |workout| %>
-  <%= div_for workout do %>
-    <%= link_to "Template ##{workout.id}", template_url(workout.id) %>
-    <%= link_to "delete", workout, method: :delete, remote: true %><br>
-  <% end %>
+  <tbody class="template" id="template_<%= workout.id %>" %> 	
+    <td>
+      <% if workout.name.empty? %>
+      	<%= link_to "Workout", template_url(workout.id) %>
+      <% else %>
+      	<%= link_to workout.name, template_url(workout.id) %>
+      <% end %>
+    </td>
+    <td><%= link_to "view", template_url(workout.id) %></td>
+    <td><%= link_to "update", edit_template_path(workout.id) %></td>
+    <td><%= link_to "delete", workout, method: :delete, remote: true %></td>
+  </tbody>
 <% end %>
+
+</table>
+
+

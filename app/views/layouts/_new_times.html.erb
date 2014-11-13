@@ -1,17 +1,19 @@
   <%= f.fields_for :component_times do |h| %>
-    <div class='exercise-fields times'>
-      <%= h.hidden_field :order %>
-      <%= h.select(:workout_component_id, @time_component_array) %>
-      <%= h.number_field :meters, class: 'number-entry' %>meters 
-      <span class="cardio-time">
-        <input type="number" class="number-entry-time hours" min="0" max="60" placeholder="hh">
-        <input type="number" class="number-entry-time mins" min="0" max="60" placeholder="mm">
-        <input type="number" class="number-entry-time secs" min="0" max="72" placeholder="ss">
-        <%= h.hidden_field :seconds, class: "actual-seconds" %>
-      </span>
-       - Rest: <%= h.number_field :rest, class: 'number-entry' %>s
-      <%= h.hidden_field '_destroy', value: false %>
-      <%= link_to image_tag('remove.png'), '#', class: "removeExercise" %>
-    </div>
+    <tbody class='exercise-fields times'>
+      <tr>
+        <%= h.hidden_field :order %>
+        <td><%= h.select(:workout_component_id, @time_component_array) %></td>
+        <td><%= h.number_field :meters, class: 'number-entry' %> meters </td>
+        <td><span class="cardio-time">
+          <input type="number" class="number-entry-time hours" min="0" max="60" placeholder="hh">
+          <input type="number" class="number-entry-time mins" min="0" max="60" placeholder="mm">
+          <input type="number" class="number-entry-time secs" min="0" max="72" placeholder="ss">
+          <%= h.hidden_field :seconds, class: "actual-seconds" %>
+        </span></td>
+        <td>Rest: <%= h.number_field :rest, class: 'number-entry' %>s</td>
+        <td><%= h.hidden_field '_destroy', value: false, class: 'destroy' %>
+        <%= link_to image_tag('remove.png'), '#', class: "removeExercise" %></td>
+      </tr>
+    </tbody>
     <script type='text/javascript'>componentsCount['times']++;</script>
   <% end %>
