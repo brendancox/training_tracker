@@ -3,8 +3,9 @@
 	  <% if user_signed_in? %>
 		<% if current_page?('/') %>
 			<h3>How to use this site</h3>
-			<p>Click on a date on the calendar to record or schedule and individual workout.</p>
-			<p>You can also use the links below to create templates of your usual workouts and use this to schedule multiple workouts.</p>
+			<p>Click on a date on the calendar to record or schedule an individual workout.</p>
+			<p>You can also use the links below to create templates of your usual workouts and 
+				generate a schedule.</p>
 		<% end %>
 		<h3>Workout Templates</h3>
 		<% @templates.each do |template| %>
@@ -38,14 +39,15 @@
 	  <% else %>
 	  	<h3>Welcome</h3>
 	  	<p>This site allows you to record and schedule your exercise.</p>
-	  	<p>You will be able to create exercise 'templates', such as one for a cardio workout and 
+	  	<p>You will be able to create exercise 'templates', e.g. one for a cardio workout and 
 	  	  another for a strength workout. You can then easily schedule these workouts one-by-one 
 	  	  or in bulk.</p>
 	  	<p>To begin using this site, <%= link_to 'sign up', new_user_registration_path %> or 
 	  		<%= link_to 'log in', new_user_session_path %>.</p>
 	  	<br>
-	  	<p>The code for this site is publicly available on github. Developers may like to view it 
-	  		<a href='http://github.com/brendancox/training_tracker'>here</a>.</p>
+	  	<p>The is an early version of this site. New features will be added over time.</p>
+	  	<p>For anyone referred here regarding the code of the site, this can be viewed on 
+	  	<a href='http://github.com/brendancox/training_tracker'>Github</a>.</p>
 	  <% end %>
 	</div>
 </div>
