@@ -4,6 +4,7 @@ class TemplatesController < WorkoutsController
 
   def index
     @workouts = current_user.templates.all
+    @templates = current_user.templates.all
   end
 
 
@@ -39,6 +40,7 @@ class TemplatesController < WorkoutsController
 
   def show
     @this_workout = current_user.templates.find(params[:id])
+    @templates = current_user.templates.all
   end
 
   def destroy

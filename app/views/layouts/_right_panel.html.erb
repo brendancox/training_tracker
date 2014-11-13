@@ -1,5 +1,6 @@
 <div class="col-md-4">
 	<div id='right-panel'>
+	  <% if user_signed_in? %>
 		<% if current_page?('/') %>
 			<h3>How to use this site</h3>
 			<p>Click on a date on the calendar to record or schedule and individual workout.</p>
@@ -34,5 +35,9 @@
 		<% end %>
 		<h3><%= link_to "View All Workouts", workouts_url %></h3>
 		<p>View all of your completed and scheduled workouts in a list.</p>
+	  <% else %>
+	  	<h3>Welcome</h3>
+	  	<p>To begin using this site, sign up using the link in the header.</p>
+	  <% end %>
 	</div>
 </div>

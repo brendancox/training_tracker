@@ -4,6 +4,7 @@ class WorkoutsController < ApplicationController
 
   def index
     @workouts = current_user.workouts.all
+    @templates = current_user.templates.all
   end
 
   def new
@@ -47,12 +48,12 @@ class WorkoutsController < ApplicationController
 
   def show
     @this_workout = current_user.workouts.find(params[:id])
+    @templates = current_user.templates.all
   end
 
   def destroy
     @workout = current_user.workouts.find(params[:id])
   	@workout.destroy
-    @workouts = current_user.workouts.all
     respond_to do |format|
       format.js { render :layout => false }
       format.html {redirect_to root_path}

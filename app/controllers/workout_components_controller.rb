@@ -1,7 +1,10 @@
 class WorkoutComponentsController < ApplicationController
 
+  before_action :authenticate_user!
+  
   def new
     @workout_component = WorkoutComponent.new(params[:workout_component])
+    @templates = current_user.templates.all
   end
 
   def create
@@ -12,6 +15,7 @@ class WorkoutComponentsController < ApplicationController
 
   def show
     @workout_component = WorkoutComponent.find(params[:id])
+    @templates = current_user.templates.all
   end
 
 end

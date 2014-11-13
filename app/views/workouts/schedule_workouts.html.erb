@@ -1,6 +1,3 @@
-<div class="row">
-	<div class="col-md-8">
-
 		<% @templates.each do |template| %>
 			<%= div_for template do %>
 				<%= check_box_tag 'template', template.id, nil, data: {template_name: template.name} %>
@@ -43,8 +40,5 @@
 		<span id='save_success'></span>
 
 		<div id="calendar"></div>
-
-	</div>
-</div>
 
 <%= render 'layouts/calendar_events' %>

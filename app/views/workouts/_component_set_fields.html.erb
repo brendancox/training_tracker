@@ -1,9 +1,0 @@
-    <div class='exercise-fields'>
-      <%= f.select(:workout_component_id, @set_component_array) %>
-      <%= f.number_field :kg, class: 'number-entry'  %>kg 
-      <%= f.number_field :reps, class: 'number-entry' %>reps 
-      <%= f.number_field :num_of_sets, class: 'number-entry' %>sets 
-       - Rest: <%= f.number_field :rest, class: 'number-entry' %>s
-      <%= f.hidden_field '_destroy', value: false, class: 'destroy' %>
-      <%= link_to image_tag('remove.png'), '#', class: "removeExercise" %>
-    </div>
