@@ -215,4 +215,10 @@ function checkForFormDivsToHide(){
   if ($('#workout_component_sets_attributes_0_order').val() === '-1'){
     $('#workout_component_sets_attributes_0_order').closest('.exercise-fields').hide();
   }
+  if ($('#template_component_times_attributes_0_order').val() === '-1'){
+    $('#template_component_times_attributes_0_order').closest('.exercise-fields').hide();
+  }
+  if ($('#template_component_sets_attributes_0_order').val() === '-1'){
+    $('#template_component_sets_attributes_0_order').closest('.exercise-fields').hide();
+  }
 }
