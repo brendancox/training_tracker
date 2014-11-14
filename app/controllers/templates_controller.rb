@@ -27,6 +27,12 @@ class TemplatesController < WorkoutsController
     @workout = current_user.templates.find(params[:id])
     @templates = current_user.templates.all
     generate_component_arrays
+    if @workout.component_sets.count == 0
+      @workout.component_sets.new(order: -1)
+    end
+    if @workout.component_times.count == 0
+      @workout.component_times.new(order: -1)
+    end
   end
 
   def update
