@@ -9,5 +9,14 @@ class ActiveSupport::TestCase
   # -- they do not yet inherit this setting
   fixtures :all
 
+  def load_seeds
+  	Rails.application.load_seed
+  end
+
+  def generate_blank_workout_with_user
+  	@user = users(:one)
+  	@new_workout = @user.workouts.new
+  end
+
   # Add more helper methods to be used by all tests here...
 end

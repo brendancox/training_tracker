@@ -1,7 +1,9 @@
 require 'test_helper'
 
 class WorkoutComponentTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+
+  test "seeds added to test db" do
+  	load_seeds
+    assert WorkoutComponent.first
+  end
 end
