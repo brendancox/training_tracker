@@ -42,6 +42,11 @@ gem 'unicorn', group: :production
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+group :test do 
+  gem 'mocha'
+  gem 'capybara'
+end
+
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
